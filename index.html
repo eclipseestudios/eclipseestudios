@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Eclipse Estudios: cine hecho con alma, mente y cuerpo, no por algoritmos."
+    />
+    <title>Eclipse Estudios</title>
+
+    <!-- Fuentes robustas vía Google Fonts (Cinzel + Cormorant Garamond) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="intro-portal" id="introPortal" aria-label="Portal de introducción">
+      <div class="intro-video-layer" id="introVideoLayer">
+        <iframe
+          id="introVimeo"
+          src="https://player.vimeo.com/video/1204784143?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=0&loop=0&controls=0"
+          title="Introducción Eclipse Estudios"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+
+      <div class="portal-options-container" id="portalOptions">
+        <button class="intro-line-horror" id="btnHorror" type="button">
+          TODA HISTORIA DEJA UNA HERENCIA, PERO NO TODA HERENCIA ES UN REGALO
+        </button>
+
+        <button class="intro-line-cosmic" id="btnCosmic" type="button">
+          CONOCE ECLIPSE ESTUDIOS
+        </button>
+      </div>
+
+      <!-- Permite saltar el video y ver las opciones de inmediato -->
+      <button class="intro-skip" id="btnSkip" type="button">Saltar intro</button>
+    </div>
+
+    <header class="site-header" aria-label="Navegación principal">
+      <nav class="main-nav">
+        <a href="#home">Home</a>
+        <a href="#historia">Nuestra Historia</a>
+        <a href="#manifiesto">Manifiesto</a>
+        <a href="#proceso">Proceso</a>
+        <a href="#proyectos">Proyectos</a>
+        <a href="herencia.html" class="nav-herencia">La Herencia Maldita</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="home-hero" id="home" aria-label="Portada Principal">
+        <div class="hero-background-wrapper"></div>
+        <div class="hero-footer">
+          <p class="hero-lead">Cine hecho con alma, mente y cuerpo, no por algoritmos.</p>
+        </div>
+      </section>
+
+      <section class="section" id="historia" aria-labelledby="historia-heading">
+        <div class="section-shell">
+          <p class="intrigue">
+            Nos rebelamos contra la inmediatez del contenido efímero y esculpimos historias que obligan al espectador a pensar.
+          </p>
+          <div class="narrative-grid">
+            <header class="section-heading">
+              <span>Origen</span>
+              <h2 id="historia-heading">La herencia de las historias potentes</h2>
+            </header>
+            <div class="text-block">
+              <h3>Filosofía y Origen</h3>
+              <p>
+                Nace de la necesidad imperativa de su fundador, Rodrigo Carreño, de rescatar el valor de las historias potentes que dejan un impacto real y duradero en el espectador. En una era saturada de contenido rápido diseñado para redes sociales, Eclipse Estudios se rebela contra la inmediatez.
+              </p>
+              <p>
+                No creamos contenido desechable; esculpimos historias memorables que obligan al espectador a pensar, a cuestionar sus propios valores y a enfrentarse a dilemas morales que permanecen en su cabeza mucho tiempo después de que la pantalla se apaga.
+              </p>
+            </div>
+          </div>
+
+          <div class="founders">
+            <h2>El Equipo Fundador</h2>
+            <div class="founder-grid">
+              <article>
+                <h3>Rodrigo Carreño</h3>
+                <p>Fundador y Director Ejecutivo</p>
+              </article>
+              <article>
+                <h3>Verónica Champion</h3>
+                <p>Mente Creativa / Cabeza detrás de todas las historias</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt" id="manifiesto" aria-labelledby="manifiesto-heading">
+        <div class="section-shell">
+          <div class="narrative-grid">
+            <header class="section-heading">
+              <span>Identidad</span>
+              <h2 id="manifiesto-heading">El Manifiesto de la Imaginación</h2>
+            </header>
+            <div class="text-block">
+              <h3>El Universo Conceptual</h3>
+              <p>
+                Conceptualmente, Eclipse Estudios no habita en la Tierra, sino en un universo infinito nacido de la imaginación de sus miembros donde toda historia puede hacerse realidad.
+              </p>
+              <p>
+                Los elementos visuales que nos definen —el mar profundo, el espacio masivo, el sol, la luna y los eclipses de luz— representan el estado de flujo creativo de nuestro equipo. Son la fuerza y la inspiración que nos sumerge por completo en el desarrollo de los guiones, la composición de las escenas y el montaje.
+              </p>
+            </div>
+          </div>
+          <div class="principles">
+            <article>
+              <h2>Misión</h2>
+              <p>
+                Entregar productos audiovisuales de la más alta calidad, rigiéndonos bajo los estándares técnicos más exigentes de la industria actual, asegurando un entretenimiento profundo y un desarrollo de personajes impecable.
+              </p>
+            </article>
+            <article>
+              <h2>Visión</h2>
+              <p>
+                Convertir a Eclipse Estudios en la casa productora referente en cuanto a narrativa, técnicas audiovisuales y calidad cinematográfica (películas y series), logrando que los clientes depositen su confianza absoluta sabiendo que su proyecto estará hecho con el alma, la mente y el cuerpo.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="proceso" aria-labelledby="proceso-heading">
+        <div class="section-shell">
+          <header class="section-heading central">
+            <span>Metodología</span>
+            <h2 id="proceso-heading">Cómo esculpimos nuestras obras</h2>
+          </header>
+          <div class="process-layout">
+            <article>
+              <h3>01. Desarrollo Cinematográfico</h3>
+              <p>Absorbemos la complejidad técnica para que la historia fluya de manera pura desde el guion hasta el encuadre final.</p>
+            </article>
+            <article>
+              <h3>02. Producción Todoterreno</h3>
+              <p>Nuestro equipo multidisciplinar domina cada etapa del proceso cinematográfico, adaptándonos al ritmo de la excelencia.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt" id="proyectos" aria-labelledby="proyectos-heading">
+        <div class="section-shell">
+          <div class="finishing-copy">
+            <header class="section-heading">
+              <span>Proyectos</span>
+              <h2 id="proyectos-heading">Herencia en Desarrollo</h2>
+            </header>
+            <p>Explora nuestras próximas producciones y las historias literarias y cinematográficas en desarrollo.</p>
+          </div>
+          <div class="project-grid">
+            <a class="project-card" href="herencia.html">
+              <span>Cortometraje / Serie</span>
+              <h3>La Herencia Maldita</h3>
+            </a>
+            <article class="project-card">
+              <span>Documental</span>
+              <h3>Archivo audiovisual</h3>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>© <span id="year"></span> Eclipse Estudios. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="https://player.vimeo.com/api/player.js"></script>
+    <script src="script.js"></script>
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear()
+    </script>
+  </body>
+</html>

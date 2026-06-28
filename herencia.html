@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="La Herencia Maldita: libro y proyecto audiovisual de Eclipse Estudios. Una historia de Veronica Champion y Rodrigo Carreño. Descubre las pistas."
+    />
+    <title>La Herencia Maldita — Eclipse Estudios</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="herencia.css" />
+  </head>
+  <body class="herencia-body">
+    <header class="herencia-header">
+      <a href="index.html" class="back-link" aria-label="Volver a Eclipse Estudios">&larr; Eclipse Estudios</a>
+    </header>
+
+    <main>
+      <!-- HERO -->
+      <section class="herencia-hero">
+        <div class="herencia-hero-veil"></div>
+        <div class="herencia-hero-content">
+          <span class="herencia-kicker">Un proyecto de Eclipse Estudios</span>
+          <h1 class="herencia-title">La Herencia Maldita</h1>
+          <p class="herencia-tagline">
+            Toda historia deja una herencia, pero no toda herencia es un regalo.
+          </p>
+          <p class="herencia-credits">
+            Historia original de Veronica Champion y Rodrigo Carreño · Escrita por Veronica Champion
+          </p>
+        </div>
+        <div class="herencia-scroll-hint" aria-hidden="true">Desciende</div>
+      </section>
+
+      <!-- RESEÑA / PRÓLOGO -->
+      <section class="herencia-section">
+        <div class="herencia-shell">
+          <h2>El umbral</h2>
+          <p class="lead-quote">
+            «La lluvia golpeaba con fuerza las ventanas de la casa, convirtiendo la noche en una masa oscura y ruidosa donde todo parecía distante.»
+          </p>
+          <p>
+            Carlos Herrera lleva tres noches sin cerrar los ojos. Encerrado en su estudio, rodeado de fotografías, recortes y notas escritas con una letra que ya no reconoce como suya, ha buscado durante meses una salida. Siempre llega a la misma conclusión: <em>no existe ninguna.</em>
+          </p>
+          <p>
+            Hay algo en esa casa que lo observa. Algo que espera. Algo que le recuerda, noche tras noche, que una deuda sigue sin saldarse. Y cuando por fin levanta la mirada, lo encuentra sentado al otro extremo de la habitación, en una silla que sabía vacía.
+          </p>
+          <p class="lead-quote dim">
+            «Lo que realmente lo aterraba no era morir. Era seguir viviendo.»
+          </p>
+        </div>
+      </section>
+
+      <!-- PISTAS INTERACTIVAS -->
+      <section class="herencia-section alt" id="pistas">
+        <div class="herencia-shell">
+          <h2>Las pistas</h2>
+          <p class="pistas-intro">
+            Cada caso esconde objetos que nadie quiso nombrar. Toca cada uno para revelar lo que el expediente prefirió olvidar.
+          </p>
+          <div class="clue-grid">
+            <button class="clue-card" type="button" data-clue="muneco">
+              <span class="clue-seal" aria-hidden="true">I</span>
+              <span class="clue-label">El Muñeco</span>
+              <span class="clue-reveal">
+                Pequeño. Antiguo. Sentado sobre una silla. Botones negros por ojos, costuras visibles, una sonrisa torcida. Aparece en cada escena... y desaparece de todos los registros oficiales.
+              </span>
+            </button>
+
+            <button class="clue-card" type="button" data-clue="circulo">
+              <span class="clue-seal" aria-hidden="true">II</span>
+              <span class="clue-label">El Círculo</span>
+              <span class="clue-reveal">
+                Decenas de restos de cera rodeando el cadáver, formando un círculo irregular. No era decoración. No era casualidad. Alguien quiso que estuviera allí.
+              </span>
+            </button>
+
+            <button class="clue-card" type="button" data-clue="fecha">
+              <span class="clue-seal" aria-hidden="true">III</span>
+              <span class="clue-label">La Fecha</span>
+              <span class="clue-reveal">
+                06 de junio del 2003. La detective Catalina la había visto antes. Demasiadas veces. Cada vez que aparece, se conecta con un recuerdo que lleva un año intentando entender.
+              </span>
+            </button>
+
+            <button class="clue-card" type="button" data-clue="carta">
+              <span class="clue-seal" aria-hidden="true">IV</span>
+              <span class="clue-label">La Carta</span>
+              <span class="clue-reveal">
+                Doblada varias veces sobre el escritorio. La intentó escribir durante semanas; cada vez terminaba rompiéndola. Ninguna palabra bastaba para justificar lo imperdonable.
+              </span>
+            </button>
+          </div>
+          <p class="clue-progress" id="clueProgress" aria-live="polite">0 / 4 pistas reveladas</p>
+        </div>
+      </section>
+
+      <!-- ACERTIJO -->
+      <section class="herencia-section" id="acertijo">
+        <div class="herencia-shell herencia-riddle" hidden id="riddleBlock">
+          <h2>El acertijo</h2>
+          <p class="riddle-text">
+            «No tengo voz, pero observo. No tengo vida, pero espero. Botones por ojos, una sonrisa que no es mía. ¿Qué soy?»
+          </p>
+          <form class="riddle-form" id="riddleForm" autocomplete="off">
+            <input
+              type="text"
+              id="riddleInput"
+              class="riddle-input"
+              placeholder="Escribe tu respuesta..."
+              aria-label="Tu respuesta al acertijo"
+            />
+            <button type="submit" class="herencia-button">Responder</button>
+          </form>
+          <p class="riddle-feedback" id="riddleFeedback" aria-live="polite"></p>
+
+          <div class="riddle-unlocked" id="riddleUnlocked" hidden>
+            <p class="lead-quote">
+              «El muñeco no vino solo. Llegó como un regalo, hace muchos años, envuelto en papel blanco y atado con una cinta roja.»
+            </p>
+            <p>
+              Lo que Carlos heredó no empezó con él. La maldición tiene raíces más antiguas, sembradas en otra casa, en otra historia. Junto al regalo encontraron una sola cosa, intacta entre el polvo: <em>una rosa blanca.</em>
+            </p>
+
+            <!-- EASTER EGG: la rosa blanca oculta -->
+            <div class="rose-discovery">
+              <button
+                type="button"
+                id="roseBtn"
+                class="rose-btn"
+                aria-label="Tocar la rosa blanca"
+              >
+                <img src="rosa-blanca.png" alt="Una rosa blanca que emerge de la oscuridad" class="rose-img" />
+                <span class="rose-whisper" aria-hidden="true">tócala</span>
+              </button>
+              <p class="rose-hint" id="roseHint">Algo sobrevivió a la maldición. La rosa aún respira... acércate.</p>
+              <a
+                href="https://youtu.be/BdmEtIZtX-Q?si=aeC3b5cW8g6p8lnj"
+                id="roseLink"
+                class="rose-link"
+                target="_blank"
+                rel="noopener noreferrer"
+                hidden
+              >
+                La rosa se abre — Entra a «La Rosa Blanca» &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- UNIVERSO COMPARTIDO -->
+      <section class="herencia-section alt" id="universo">
+        <div class="herencia-shell">
+          <h2>El universo</h2>
+          <p>
+            <strong class="rosa">La Herencia Maldita</strong> no existe sola. Forma parte de un mismo universo narrativo creado por Veronica Champion, conectado con <strong class="rosa">La Rosa Blanca</strong>, obra ya realizada que cuenta con su propio cortometraje.
+          </p>
+          <p>
+            Los hilos se cruzan: un objeto, una fecha, un apellido. Quien preste atención descubrirá que ambas historias comparten más que una atmósfera. Comparten una raíz.
+          </p>
+          <div class="universe-grid">
+            <article class="universe-card">
+              <span>Obra hermana</span>
+              <h3>La Rosa Blanca</h3>
+              <p>Cortometraje realizado · Veronica Champion</p>
+            </article>
+            <article class="universe-card current">
+              <span>Estás aquí</span>
+              <h3>La Herencia Maldita</h3>
+              <p>Libro en desarrollo · Proyecto audiovisual</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- EN DESARROLLO -->
+      <section class="herencia-section" id="desarrollo">
+        <div class="herencia-shell">
+          <h2>En desarrollo</h2>
+          <div class="herencia-meta">
+            <div>
+              <span>Formato</span>
+              <p>Libro · Cortometraje / Serie</p>
+            </div>
+            <div>
+              <span>Género</span>
+              <p>Terror psicológico</p>
+            </div>
+            <div>
+              <span>Estado</span>
+              <p>Escritura en curso</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="herencia-section alt">
+        <div class="herencia-shell herencia-cta">
+          <p>El expediente sigue abierto. Vuelve: nuevas pistas se revelarán con el tiempo.</p>
+          <a href="index.html#proyectos" class="herencia-button">Ver todos los proyectos</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="herencia-footer">
+      <p>© <span id="year"></span> Eclipse Estudios · La Herencia Maldita</p>
+    </footer>
+
+    <script src="herencia.js"></script>
+  </body>
+</html>
