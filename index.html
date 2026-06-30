@@ -9,6 +9,9 @@
     />
     <title>Eclipse Estudios | Cine Hecho con el Alma</title>
 
+    <!-- Favicon de Eclipse Estudios -->
+    <link rel="icon" type="image/png" href="favicon.png" />
+
     <!-- Fuentes robustas vía Google Fonts (Cinzel + Cormorant Garamond) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -213,23 +216,23 @@
         border-color: var(--ink);
       }
 
-	/* Aviso de sonido */
-	.intro-portal.needs-sound-gesture::after {
-  	content: "Haga clic para activar la experiencia con sonido";
-  	position: absolute;
-  	bottom: 40px;
-  	font-family: var(--font-display);
-  	font-size: 0.75rem;
-  	letter-spacing: 2px;
-  	color: var(--muted);
-  	z-index: 20;
-  	pointer-events: none;
-  	animation: pulse 2s infinite ease-in-out;
+      /* Aviso de sonido */
+      .intro-portal.needs-sound-gesture::after {
+        content: "Haga clic para activar la experiencia con sonido";
+        position: absolute;
+        bottom: 40px;
+        font-family: var(--font-display);
+        font-size: 0.75rem;
+        letter-spacing: 2px;
+        color: var(--muted);
+        z-index: 20;
+        pointer-events: none;
+        animation: pulse 2s infinite ease-in-out;
       }
 
-	@keyframes pulse {
-  	0%, 100% { opacity: 0.4; }
-  	50% { opacity: 1; }
+      @keyframes pulse {
+        0%, 100% { opacity: 0.4; }
+        50% { opacity: 1; }
       }
 
       
@@ -251,13 +254,12 @@
         justify-content: center;
         align-items: center;
         opacity: 0;
-        transform: translateY(-20px);
-        transition: opacity 1.5s ease, transform 1.5s ease;
+        /* TRANSICIÓN: Ahora el menú aparece en exactamente 1.25 segundos */
+        transition: opacity 1.25s ease;
       }
 
       .site-header.is-visible {
         opacity: 1;
-        transform: translateY(0);
       }
       
       .main-nav {
@@ -326,27 +328,47 @@
         align-items: center;
         padding: 0 0px 80px;
         background: var(--black);
+        overflow: hidden; 
       }
       
-		/* Portada con etiqueta <img> */
-	.hero-main-image {
-		width: 100%;
-		max-width: 1600px; /* Aquí controlas el tamaño. 900px o 1000px queda muy bien */
-		display: block;
-		margin: 65px auto 0 auto; /* El "auto" a los lados la mantiene centrada */
-		object-fit: contain;
-		/* Efecto de resplandor sutil */
-		filter: drop-shadow(0 0 60px rgba(0, 210, 255, 0.35)) drop-shadow(0 0 150px rgba(0, 210, 255, 0.20));
-		position: relative;
-		z-index: 1;
-	  }
+      .home-hero::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        /* ALTURA REDUCIDA: Para dejar que la luz baje un poco más */
+        height: 250px; 
+        background: linear-gradient(to bottom, transparent 0%, rgba(2,2,5,0.4) 30%, var(--black) 95%, var(--black) 100%);
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* Portada con etiqueta <img> */
+      .hero-main-image {
+        width: 100%;
+        max-width: 1600px;
+        display: block;
+        margin: 65px auto 0 auto;
+        object-fit: contain;
+        filter: drop-shadow(0 0 80px rgba(0, 210, 255, 0.45)) drop-shadow(0 0 180px rgba(0, 210, 255, 0.30));
+        position: relative;
+        z-index: 1;
+        opacity: 0;
+        /* TRANSICIÓN AUMENTADA: Ahora el fundido dura 4.5 segundos */
+        transition: opacity 4.5s cubic-bezier(0.25, 1, 0.5, 1); 
+      }
+
+      .hero-main-image.is-visible {
+        opacity: 1;
+      }
       
       .hero-footer {
         position: relative;
         z-index: 2;
         text-align: center;
         margin-top: clamp(30px, 5vh, 60px);
-        padding: 0 100px;
+        padding: 0 100px; /* Será reescrito en móviles */
       }
       
       .hero-lead {
@@ -534,7 +556,6 @@
 
       /* Manifiesto Cósmico */
       .cosmic-banner {
-        /* Usamos una imagen sideral oscura que complemente la paleta de portada-eclipse.jpg */
         background: linear-gradient(rgba(2,2,5,0.85), rgba(2,2,5,0.85)), url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000&auto=format&fit=crop") center/cover fixed;
         padding: 120px 40px;
         text-align: center;
@@ -842,6 +863,27 @@
         text-transform: uppercase;
       }
 
+      .header-actions {
+        display: flex;
+        align-items: center;
+      }
+
+      /* Estilos para el nuevo botón de sonido */
+      .sound-toggle {
+        background: none;
+        border: none;
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 1.2rem;
+        margin-right: 15px;
+        transition: transform 200ms ease;
+        padding: 0;
+      }
+
+      .sound-toggle:hover {
+        transform: scale(1.1);
+      }
+
       .close-oracle {
         background: none;
         border: none;
@@ -979,12 +1021,14 @@
           padding: 80px 24px;
         }
 
-        .hero-background-wrapper {
-          margin-top: 80px;
-          /* En móvil forzamos que se cubra más área para que no se vea tan pequeño */
-          background-size: cover; 
-          aspect-ratio: auto;
-          height: 50vh;
+        .hero-main-image {
+          margin-top: 80px; 
+          filter: drop-shadow(0 0 20px rgba(0, 210, 255, 0.4)) drop-shadow(0 0 60px rgba(0, 210, 255, 0.25));
+        }
+
+        .hero-footer {
+          padding: 0 20px;
+          margin-top: 30px;
         }
       
         .intrigue {
@@ -993,7 +1037,7 @@
         }
         
         .intrigue::before, .intrigue::after {
-          display: none; /* Quitamos las líneas laterales en móvil para ahorrar espacio */
+          display: none;
         }
       
         .narrative-grid,
@@ -1020,10 +1064,10 @@
   <body>
     <div class="intro-portal" id="introPortal" aria-label="Portal de introducción">
       <div class="intro-video-layer" id="introVideoLayer">
-        <!-- Video introductorio de Vimeo -->
+        <!-- ⚠️ NOTA: El muted=1 es vital para que el navegador permita que el video se autoreproduzca -->
         <iframe
           id="introVimeo"
-          src="https://player.vimeo.com/video/1204784143?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=0&loop=0&controls=0"
+          src="https://player.vimeo.com/video/1204784143?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=0&controls=0"
           title="Introducción Eclipse Estudios"
           allow="autoplay; fullscreen; picture-in-picture"
           allowfullscreen
@@ -1194,8 +1238,12 @@
       </section>
 
       <section class="section" id="proyectos" aria-labelledby="proyectos-heading">
+        <!-- Contenedor general que cierra proyectos -->
+      </section>
+    </main>
+
     <!-- ==========================================================================
-         EL ARCHIVO (GEMINI AI CHAT) - AHORA COMO ASESOR DE PRODUCCIÓN
+         EL ARCHIVO (GEMINI AI CHAT) - AHORA CON VOZ
          ========================================================================== -->
     <button id="oracleBtnToggle" class="oracle-btn" aria-label="Consultar al Asesor">
       Contacto y Asesoría
@@ -1204,7 +1252,11 @@
     <div id="oracleModal" class="oracle-modal">
       <div class="oracle-header">
         <h3>Asesor Eclipse</h3>
-        <button id="closeOracle" class="close-oracle">&times;</button>
+        <!-- 🔊 Botones añadidos en la cabecera: Voz y Cerrar -->
+        <div class="header-actions">
+          <button id="soundToggle" class="sound-toggle" aria-label="Activar/Desactivar voz" title="Activar Voz">🔊</button>
+          <button id="closeOracle" class="close-oracle">&times;</button>
+        </div>
       </div>
       <div class="oracle-chat" id="oracleChat">
         <div class="chat-msg bot">
@@ -1245,79 +1297,119 @@
         if (yearEl) yearEl.textContent = new Date().getFullYear();
 
         // Portal de Intro
-        const introPortal = document.getElementById("introPortal")
-        const introVideoLayer = document.getElementById("introVideoLayer")
-        const portalOptions = document.getElementById("portalOptions")
-        const btnHorror = document.getElementById("btnHorror")
-        const btnCosmic = document.getElementById("btnCosmic")
-        const btnSkip = document.getElementById("btnSkip")
-        const introFrame = document.getElementById("introVimeo")
+        const introPortal = document.getElementById("introPortal");
+        const introVideoLayer = document.getElementById("introVideoLayer");
+        const portalOptions = document.getElementById("portalOptions");
+        const btnHorror = document.getElementById("btnHorror");
+        const btnCosmic = document.getElementById("btnCosmic");
+        const btnSkip = document.getElementById("btnSkip");
+        const introFrame = document.getElementById("introVimeo");
       
         if (introPortal) {
+          // Aseguramos que inicie con el cartel de sonido habilitado para la capa oscura
+          introPortal.classList.add("needs-sound-gesture");
+
           const revealOptions = () => {
-            if (introVideoLayer) introVideoLayer.classList.add("is-fading")
+            // Ocultar botón de saltar para siempre, inmediatamente
+            if (btnSkip) btnSkip.style.display = "none";
+            
+            // Quitar el cartel de "Haga clic para activar sonido"
+            introPortal.classList.remove("needs-sound-gesture");
+            
+            if (introVideoLayer) introVideoLayer.classList.add("is-fading");
+            
+            // Pausar video si sigue reproduciéndose en el fondo
+            if (window.Vimeo && introFrame) {
+              try {
+                const player = new window.Vimeo.Player(introFrame);
+                player.pause();
+              } catch(e) {}
+            }
+
             window.setTimeout(() => {
-              if (introVideoLayer) introVideoLayer.setAttribute("aria-hidden", "true")
-              if (portalOptions) portalOptions.classList.add("is-visible")
-            }, 900)
+              if (introVideoLayer) {
+                introVideoLayer.setAttribute("aria-hidden", "true");
+                introVideoLayer.style.display = "none"; // Desaparecer por completo la capa de video
+              }
+              if (portalOptions) portalOptions.classList.add("is-visible");
+            }, 900);
           }
         
           const closeIntroPortal = () => {
-            introPortal.classList.add("is-closed")
-            window.setTimeout(() => {
-              introPortal.setAttribute("hidden", "")
-              introPortal.remove() 
-            }, 800)
-                        // NUEVO: Secuencia de aparición tipo cine
-              const heroImage = document.querySelector('.hero-main-image');
-              const siteHeader = document.querySelector('.site-header');
+            introPortal.classList.add("is-closed");
 
-              // 1. Inicia el fundido de la imagen de portada inmediatamente
-              if (heroImage) {
+            // Secuencia de aparición tipo cine INMEDIATA al hacer clic
+            const heroImage = document.querySelector('.hero-main-image');
+            const siteHeader = document.querySelector('.site-header');
+
+            // 1. Inicia el fundido de la imagen de portada con 1.75s de retraso
+            if (heroImage) {
+              window.setTimeout(() => {
                 heroImage.classList.add('is-visible');
-              }
+              }, 1750);
+            }
 
-              // 2. Hace aparecer el menú deslizando desde arriba, 1.2 segundos después
-              if (siteHeader) {
-                window.setTimeout(() => {
-                  siteHeader.classList.add('is-visible');
-                }, 1200);
-              }
+            // 2. Hace aparecer el menú INMEDIATAMENTE al hacer clic
+            if (siteHeader) {
+              siteHeader.classList.add('is-visible');
+            }
 
-            }, 800) // Este 800 es lo que tarda el portal negro en desaparecer
+            window.setTimeout(() => {
+              introPortal.setAttribute("hidden", "");
+              introPortal.remove(); 
+            }, 800); // Lo que tarda el portal en desvanecer (ahora el contenido ya estará apareciendo por detrás)
           }
-                
+        
           if (btnHorror) {
             btnHorror.addEventListener("click", () => {
-              window.location.href = "herencia.html"
+              window.location.href = "herencia.html";
             })
           }
         
-          if (btnCosmic) btnCosmic.addEventListener("click", closeIntroPortal)
-          if (btnSkip) btnSkip.addEventListener("click", revealOptions)
-        
-          if (window.Vimeo && introFrame) {
-            const player = new window.Vimeo.Player(introFrame)
-            player.setVolume(1)
-            player.play().catch(() => {
-              introPortal.classList.add("needs-sound-gesture")
-            })
-            player.on("ended", revealOptions)
-            window.setTimeout(revealOptions, 30000)
-          } else {
-            revealOptions()
+          if (btnCosmic) btnCosmic.addEventListener("click", closeIntroPortal);
+          
+          if (btnSkip) {
+            btnSkip.addEventListener("click", (e) => {
+              e.stopPropagation(); // Evita dar "play" al video si tocas el botón de saltar
+              revealOptions();
+            });
           }
         
-          introPortal.addEventListener("click", () => {
-            if (introPortal.classList.contains("needs-sound-gesture")) {
-              introPortal.classList.remove("needs-sound-gesture")
-              if (window.Vimeo && introFrame) {
-                const player = new window.Vimeo.Player(introFrame)
-                player.setVolume(1)
-                player.play()
-              }
+          // Lógica súper robusta para Vimeo
+          const initVideo = () => {
+            if (window.Vimeo && introFrame) {
+              const player = new window.Vimeo.Player(introFrame);
+              
+              // Evento principal: Clic para dar sonido
+              introPortal.addEventListener("click", (e) => {
+                // Previene que se active si hiciste clic en los botones
+                if(e.target === btnSkip || e.target === btnCosmic || e.target === btnHorror) return;
+                
+                if (introPortal.classList.contains("needs-sound-gesture")) {
+                  introPortal.classList.remove("needs-sound-gesture");
+                  player.setMuted(false);
+                  player.setVolume(1);
+                  player.play().catch(()=>{}); // Iniciar reproducción tras desbloqueo
+                }
+              });
+
+              // Mostrar botones automáticamente cuando acabe el video
+              player.on("ended", revealOptions);
+
+              // Respaldo de seguridad por si el evento de finalización no se dispara
+              window.setTimeout(revealOptions, 35000); 
+            } else {
+               // Si vimeo está bloqueado, revela opciones directamente
+               revealOptions();
             }
-          })
+          };
+
+          // Intentar inicializar el video
+          if (window.Vimeo) {
+            initVideo();
+          } else {
+            window.setTimeout(initVideo, 1500); // Esperar que la librería cargue si demora
+          }
         }
 
         // Animaciones al hacer Scroll
@@ -1338,7 +1430,7 @@
         revealElements.forEach(el => revealOnScroll.observe(el));
 
         // ==========================================================================
-        // LÓGICA DE "EL ARCHIVO" (GEMINI AI)
+        // LÓGICA DE "EL ARCHIVO" (GEMINI AI) Y SÍNTESIS DE VOZ
         // ==========================================================================
         const oracleBtnToggle = document.getElementById('oracleBtnToggle');
         const oracleModal = document.getElementById('oracleModal');
@@ -1347,16 +1439,59 @@
         const oracleInput = document.getElementById('oracleInput');
         const oracleSendBtn = document.getElementById('oracleSendBtn');
         const typingIndicator = document.getElementById('typingIndicator');
+        const soundToggle = document.getElementById('soundToggle');
 
         let chatHistory = [];
+        
+        // Estado inicial de la voz (Activo por defecto)
+        let isVoiceEnabled = true; 
+
+        // Lógica del botón de encender/apagar voz
+        if (soundToggle) {
+          soundToggle.addEventListener('click', () => {
+            isVoiceEnabled = !isVoiceEnabled; // Invierte el estado
+            soundToggle.textContent = isVoiceEnabled ? '🔊' : '🔇'; // Cambia el emoji
+            soundToggle.title = isVoiceEnabled ? 'Desactivar Voz' : 'Activar Voz';
+            
+            // Si el usuario decide silenciarlo mientras está hablando, callarlo de inmediato
+            if (!isVoiceEnabled && 'speechSynthesis' in window) {
+              window.speechSynthesis.cancel();
+            }
+          });
+        }
+
+        // Función central para hacer hablar al bot
+        function speakBotResponse(text) {
+          // Si la voz está apagada o el navegador no la soporta, no hacemos nada
+          if (!isVoiceEnabled || !('speechSynthesis' in window)) return;
+          
+          // Callamos cualquier audio anterior por si se quedaron hablando encima
+          window.speechSynthesis.cancel();
+          
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.lang = 'es-ES'; // Idioma Español
+          utterance.pitch = 0.9;    // Tono levemente más grave para que suene serio
+          utterance.rate = 1.0;     // Velocidad normal
+          
+          window.speechSynthesis.speak(utterance);
+        }
 
         // Toggle Modal
         if(oracleBtnToggle && oracleModal && closeOracle) {
           oracleBtnToggle.addEventListener('click', () => {
             oracleModal.classList.toggle('is-open');
+            // TRUCO VITAL PARA SAFARI Y CHROME: Inicializamos la voz en silencio 
+            // con un "clic" real del usuario para que nos de permiso de usarla más tarde.
+            if ('speechSynthesis' in window) {
+               const silentUtterance = new SpeechSynthesisUtterance('');
+               silentUtterance.volume = 0;
+               window.speechSynthesis.speak(silentUtterance);
+            }
           });
           closeOracle.addEventListener('click', () => {
             oracleModal.classList.remove('is-open');
+            // 🔇 Importante: Si el usuario cierra el chat, callamos al bot
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
           });
         }
 
@@ -1392,8 +1527,8 @@
           Si el usuario pide contacto, proporciónales el correo: eclipse.estudios.peru@gmail.com
           Tus respuestas deben ser concisas (máximo 2-3 frases breves). Nunca uses emojis.`;
 
-          const apiKey = ""; // API Key provided automatically by environment
-          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+          const apiKey = ""; 
+          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
           const payload = {
             contents: chatHistory,
@@ -1445,7 +1580,12 @@
           // Hide typing indicator and show bot message
           typingIndicator.style.display = 'none';
           oracleSendBtn.disabled = false;
+          
+          // Agregamos el texto al chat visualmente
           appendMessage(botResponse, 'bot');
+          
+          // 🔊 Y aquí llamamos a la función mágica para que lo lea en voz alta
+          speakBotResponse(botResponse);
           
           // Focus input again
           oracleInput.focus();
@@ -1459,3 +1599,5 @@
         }
       });
     </script>
+  </body>
+</html>
