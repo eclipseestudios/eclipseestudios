@@ -250,6 +250,14 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: opacity 1.5s ease, transform 1.5s ease;
+      }
+
+      .site-header.is-visible {
+        opacity: 1;
+        transform: translateY(0);
       }
       
       .main-nav {
@@ -278,11 +286,32 @@
       .main-nav a.nav-herencia {
         color: var(--blood-red);
         font-weight: 500;
+        animation: menacing-glow 5s infinite;
       }
       
       .main-nav a.nav-herencia:hover {
         color: var(--blood-red-bright);
-        text-shadow: 0 0 12px rgba(239, 45, 39, 0.6);
+        text-shadow: 0 0 15px rgba(239, 45, 39, 0.9);
+        animation: none;
+      }
+
+      @keyframes menacing-glow {
+        0%, 100% {
+          color: var(--blood-red);
+          text-shadow: 0 0 8px rgba(239, 45, 39, 0.4);
+        }
+        50% {
+          color: var(--blood-red-bright);
+          text-shadow: 0 0 15px rgba(239, 45, 39, 0.8), 0 0 30px rgba(165, 29, 24, 0.6);
+        }
+        70%, 75% {
+          color: #3a0503;
+          text-shadow: none;
+        }
+        72%, 78% {
+          color: var(--blood-red-bright);
+          text-shadow: 0 0 20px rgba(239, 45, 39, 1);
+        }
       }
       
       /* ==========================================================================
@@ -1239,8 +1268,25 @@
               introPortal.setAttribute("hidden", "")
               introPortal.remove() 
             }, 800)
+                        // NUEVO: Secuencia de aparición tipo cine
+              const heroImage = document.querySelector('.hero-main-image');
+              const siteHeader = document.querySelector('.site-header');
+
+              // 1. Inicia el fundido de la imagen de portada inmediatamente
+              if (heroImage) {
+                heroImage.classList.add('is-visible');
+              }
+
+              // 2. Hace aparecer el menú deslizando desde arriba, 1.2 segundos después
+              if (siteHeader) {
+                window.setTimeout(() => {
+                  siteHeader.classList.add('is-visible');
+                }, 1200);
+              }
+
+            }, 800) // Este 800 es lo que tarda el portal negro en desaparecer
           }
-        
+                
           if (btnHorror) {
             btnHorror.addEventListener("click", () => {
               window.location.href = "herencia.html"
