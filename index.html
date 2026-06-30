@@ -7,21 +7,994 @@
       name="description"
       content="Eclipse Estudios: cine hecho con alma, mente y cuerpo, no por algoritmos."
     />
-    <title>Eclipse Estudios</title>
+    <title>Eclipse Estudios | Cine Hecho con el Alma</title>
 
     <!-- Fuentes robustas vía Google Fonts (Cinzel + Cormorant Garamond) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap"
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* ==========================================================================
+         VARIABLES Y BASE (Ajustado a la paleta de portada-eclipse.jpg)
+         ========================================================================== */
+      :root {
+        --black: #020205; /* Azul casi negro para fondos profundos */
+        --abyss: #05050a; /* Tono ligeramente más claro para contraste */
+        --ink: #f4eee7;
+        --muted: rgba(244, 238, 231, 0.65);
+        --faint: rgba(244, 238, 231, 0.1);
+        --line: rgba(0, 191, 255, 0.2); /* Líneas sutiles en tono cian */
+        --blood-red: #a51d18;
+        --blood-red-bright: #ef2d27;
+        
+        /* Tonos extraídos del aro luminoso del eclipse */
+        --cosmic-cyan: #00d2ff; 
+        --cosmic-glow: rgba(0, 210, 255, 0.45);
+        --cosmic-dark: #004d66;
+      
+        --font-display: "Cinzel", serif;
+        --font-body: "Cormorant Garamond", "Cormorant", serif;
+      }
+      
+      * {
+        box-sizing: border-box;
+      }
+      
+      html {
+        scroll-behavior: smooth;
+        background: var(--black);
+      }
+      
+      body {
+        margin: 0;
+        background: var(--black);
+        color: var(--ink);
+        font-family: var(--font-body);
+        font-weight: 300;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+
+      /* ==========================================================================
+         ANIMACIONES DE SCROLL (INTERACTIVIDAD)
+         ========================================================================== */
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.9s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+      /* ==========================================================================
+         FASE 1: PORTAL DE INTRODUCCIÓN Y VIDEO
+         ========================================================================== */
+      .intro-portal {
+        position: fixed;
+        inset: 0;
+        width: 100vw;
+        height: 100vh;
+        background: var(--black);
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 800ms cubic-bezier(0.25, 1, 0.5, 1), visibility 800ms ease;
+      }
+      
+      .intro-portal.is-closed {
+        opacity: 0;
+        pointer-events: none;
+        visibility: hidden;
+      }
+      
+      .intro-video-layer {
+        position: absolute;
+        inset: 0;
+        width: 100vw;
+        height: 100vh;
+        background: var(--black);
+        z-index: 1;
+        overflow: hidden;
+        transition: opacity 900ms ease;
+      }
+      
+      .intro-video-layer iframe {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100vw !important;
+        height: 56.25vw !important;
+        min-height: 100vh !important;
+        min-width: 177.77vh !important;
+        transform: translate(-50%, -50%);
+        border: none;
+        pointer-events: none;
+      }
+      
+      .intro-video-layer.is-fading {
+        opacity: 0;
+        pointer-events: none;
+      }
+      
+      .portal-options-container {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 70px;
+        width: 100%;
+        max-width: 900px;
+        padding: 20px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 1000ms ease 400ms;
+      }
+      
+      .portal-options-container.is-visible {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      
+      .intro-line-horror {
+        font-family: var(--font-display);
+        color: var(--blood-red);
+        background: transparent;
+        border: none;
+        outline: none;
+        font-size: clamp(1rem, 3vw, 1.35rem);
+        text-align: center;
+        letter-spacing: 4px;
+        cursor: pointer;
+        line-height: 1.6;
+        text-shadow: 0 0 10px rgba(165, 29, 24, 0.5);
+        transition: color 400ms ease, text-shadow 400ms ease, transform 400ms ease;
+      }
+      
+      .intro-line-horror:hover,
+      .intro-line-horror:focus-visible {
+        color: var(--blood-red-bright);
+        transform: scale(1.02);
+        text-shadow: 0 0 20px rgba(239, 45, 39, 0.9), 0 0 30px rgba(239, 45, 39, 0.4);
+      }
+      
+      .intro-line-cosmic {
+        font-family: var(--font-display);
+        color: var(--ink);
+        background: transparent;
+        border: none;
+        outline: none;
+        font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+        text-align: center;
+        letter-spacing: 6px;
+        cursor: pointer;
+        text-transform: uppercase;
+        opacity: 0.85;
+        transition: color 400ms ease, text-shadow 400ms ease, transform 400ms ease;
+      }
+      
+      .intro-line-cosmic:hover,
+      .intro-line-cosmic:focus-visible {
+        color: #ffffff;
+        opacity: 1;
+        transform: scale(1.04);
+        text-shadow: 0 0 15px var(--cosmic-cyan), 0 0 25px var(--cosmic-glow);
+      }
+      
+      .intro-skip {
+        position: absolute;
+        top: 24px;
+        right: 24px;
+        z-index: 20;
+        font-family: var(--font-display);
+        font-size: 0.7rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--muted);
+        background: rgba(0,0,0,0.5);
+        border: 1px solid var(--faint);
+        border-radius: 999px;
+        padding: 8px 18px;
+        cursor: pointer;
+        transition: color 200ms ease, border-color 200ms ease;
+      }
+      
+      .intro-skip:hover {
+        color: var(--ink);
+        border-color: var(--ink);
+      }
+
+	/* Aviso de sonido */
+	.intro-portal.needs-sound-gesture::after {
+  	content: "Haga clic para activar la experiencia con sonido";
+  	position: absolute;
+  	bottom: 40px;
+  	font-family: var(--font-display);
+  	font-size: 0.75rem;
+  	letter-spacing: 2px;
+  	color: var(--muted);
+  	z-index: 20;
+  	pointer-events: none;
+  	animation: pulse 2s infinite ease-in-out;
+      }
+
+	@keyframes pulse {
+  	0%, 100% { opacity: 0.4; }
+  	50% { opacity: 1; }
+      }
+
+      
+      /* ==========================================================================
+         INTERFAZ PRINCIPAL: HEADER Y NAVEGACIÓN ORIGINAL
+         ========================================================================== */
+      .site-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 24px 40px;
+        background: rgba(2, 2, 5, 0.75);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--faint);
+        z-index: 100;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      .main-nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 40px;
+      }
+      
+      .main-nav a {
+        font-family: var(--font-display);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        color: var(--muted);
+        text-decoration: none;
+        transition: color 300ms ease, text-shadow 300ms ease;
+      }
+      
+      .main-nav a:hover,
+      .main-nav a:focus-visible {
+        color: var(--ink);
+        text-shadow: 0 0 8px rgba(244, 238, 231, 0.4);
+      }
+      
+      .main-nav a.nav-herencia {
+        color: var(--blood-red);
+        font-weight: 500;
+      }
+      
+      .main-nav a.nav-herencia:hover {
+        color: var(--blood-red-bright);
+        text-shadow: 0 0 12px rgba(239, 45, 39, 0.6);
+      }
+      
+      /* ==========================================================================
+         PORTADA (HERO) CON IMAGEN EN 16:9
+         ========================================================================== */
+      .home-hero {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 24px 80px;
+        overflow: hidden;
+        background: var(--black);
+      }
+      
+      /* Contenedor que mantiene la proporción 16:9 para la imagen principal */
+      .hero-background-wrapper {
+        width: 100%;
+        max-width: 1600px;
+        aspect-ratio: 16 / 9;
+        margin-top: 100px;
+        /* Usamos tu imagen original */
+        background-image: url("eclipse-portada.png");
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        /* Efecto de resplandor para fusionar la imagen con el fondo */
+        filter: drop-shadow(0 0 40px rgba(0, 210, 255, 0.15));
+      }
+      
+      .hero-footer {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        margin-top: clamp(30px, 5vh, 60px);
+        padding: 0 20px;
+      }
+      
+      .hero-lead {
+        font-family: var(--font-display);
+        font-size: clamp(1.4rem, 3.5vw, 2.8rem);
+        font-weight: 400;
+        line-height: 1.35;
+        letter-spacing: 4px;
+        color: var(--ink);
+        max-width: 1000px;
+        margin: 0 auto;
+        text-shadow:
+          0 0 24px rgba(0, 210, 255, 0.3),
+          0 4px 20px rgba(0, 0, 0, 0.9);
+      }
+      
+      /* ==========================================================================
+         SECCIONES DE CONTENIDO
+         ========================================================================== */
+      .section {
+        padding: 140px 40px;
+        display: flex;
+        justify-content: center;
+        background: var(--black);
+        position: relative;
+      }
+      
+      .section.alt {
+        background: var(--abyss);
+        border-top: 1px solid var(--faint);
+        border-bottom: 1px solid var(--faint);
+      }
+
+      .section-shell {
+        width: 100%;
+        max-width: 1100px;
+        z-index: 2;
+      }
+      
+      .intrigue {
+        font-family: var(--font-display);
+        font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+        line-height: 1.6;
+        color: var(--ink);
+        text-align: center;
+        max-width: 850px;
+        margin: 0 auto 120px auto;
+        letter-spacing: 1px;
+        position: relative;
+      }
+
+      .intrigue::before, .intrigue::after {
+        content: '';
+        display: inline-block;
+        width: 40px;
+        height: 1px;
+        background: var(--cosmic-cyan);
+        vertical-align: middle;
+        margin: 0 20px;
+        box-shadow: 0 0 10px var(--cosmic-glow);
+      }
+      
+      .narrative-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+        gap: 80px;
+        align-items: start;
+      }
+      
+      .section-heading {
+        position: relative;
+      }
+      
+      .section-heading.central {
+        text-align: center;
+        margin-bottom: 70px;
+      }
+      
+      .section-heading span {
+        font-family: var(--font-display);
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 5px;
+        color: var(--cosmic-cyan);
+        text-shadow: 0 0 12px var(--cosmic-glow);
+        display: block;
+        margin-bottom: 14px;
+      }
+
+      .heading-horror span {
+        color: var(--blood-red-bright);
+        text-shadow: 0 0 14px rgba(239, 45, 39, 0.4);
+      }
+      
+      .section-heading h2 {
+        font-family: var(--font-display);
+        font-size: clamp(1.8rem, 4vw, 2.4rem);
+        font-weight: 400;
+        letter-spacing: 2px;
+        margin: 0;
+        line-height: 1.25;
+      }
+      
+      .text-block h3 {
+        font-family: var(--font-display);
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        color: var(--ink);
+        margin: 0 0 20px 0;
+        font-weight: 400;
+        opacity: 0.9;
+      }
+      
+      .text-block p {
+        font-size: 1.25rem;
+        line-height: 1.8;
+        color: var(--muted);
+        margin: 0 0 24px 0;
+      }
+      
+      .text-block p:last-child {
+        margin-bottom: 0;
+      }
+      
+      /* Fundadores */
+      .founders {
+        margin-top: 100px;
+        border-top: 1px solid var(--faint);
+        padding-top: 60px;
+      }
+      
+      .founders h2 {
+        font-family: var(--font-display);
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        margin-bottom: 40px;
+        color: var(--ink);
+        font-weight: 400;
+      }
+      
+      .founder-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+      }
+      
+      .founder-grid article {
+        background: rgba(255, 255, 255, 0.015);
+        padding: 30px;
+        border: 1px solid var(--faint);
+        transition: border-color 0.4s ease, box-shadow 0.4s ease;
+      }
+
+      .founder-grid article:hover {
+        border-color: var(--cosmic-cyan);
+        box-shadow: inset 0 0 30px rgba(0, 210, 255, 0.03);
+      }
+
+      .founder-grid h3 {
+        font-family: var(--font-display);
+        font-size: 1.3rem;
+        font-weight: 400;
+        letter-spacing: 2px;
+        color: var(--ink);
+        margin: 0 0 12px 0;
+      }
+      
+      .founder-grid p {
+        font-size: 1.1rem;
+        color: var(--muted);
+        margin: 0 0 16px 0;
+        line-height: 1.6;
+      }
+
+      .founder-grid .roles {
+        font-size: 0.8rem;
+        color: var(--cosmic-cyan);
+        font-family: var(--font-display);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      /* Manifiesto Cósmico */
+      .cosmic-banner {
+        /* Usamos una imagen sideral oscura que complemente la paleta de portada-eclipse.jpg */
+        background: linear-gradient(rgba(2,2,5,0.85), rgba(2,2,5,0.85)), url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000&auto=format&fit=crop") center/cover fixed;
+        padding: 120px 40px;
+        text-align: center;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        margin: 80px 0;
+      }
+
+      .cosmic-banner h2 {
+        font-family: var(--font-display);
+        font-size: clamp(2rem, 4vw, 2.8rem);
+        color: #fff;
+        letter-spacing: 6px;
+        margin: 0 0 30px 0;
+        text-shadow: 0 0 25px var(--cosmic-glow);
+      }
+
+      .cosmic-banner p {
+        font-size: 1.35rem;
+        line-height: 1.8;
+        color: var(--ink);
+        max-width: 850px;
+        margin: 0 auto;
+      }
+      
+      /* Misión y Visión */
+      .principles {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 70px;
+        margin-top: 60px;
+      }
+      
+      .principles h2 {
+        font-family: var(--font-display);
+        font-size: 1.05rem;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        margin: 0 0 20px 0;
+        font-weight: 500;
+        color: var(--cosmic-cyan);
+      }
+      
+      .principles p {
+        font-size: 1.2rem;
+        line-height: 1.7;
+        color: var(--muted);
+        margin: 0;
+      }
+      
+      /* Metodología */
+      .process-layout {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 50px;
+      }
+      
+      .process-layout article {
+        position: relative;
+        padding-top: 24px;
+      }
+
+      .process-layout article::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 50px;
+        height: 2px;
+        background: var(--cosmic-cyan);
+        box-shadow: 0 0 12px var(--cosmic-glow);
+      }
+
+      .process-layout h3 {
+        font-family: var(--font-display);
+        font-size: 1rem;
+        font-weight: 500;
+        letter-spacing: 3px;
+        margin: 0 0 16px 0;
+        color: var(--ink);
+        text-transform: uppercase;
+      }
+      
+      .process-layout p {
+        font-size: 1.15rem;
+        line-height: 1.7;
+        color: var(--muted);
+        margin: 0;
+      }
+
+      .diferenciador {
+        text-align: center;
+        max-width: 850px;
+        margin: 100px auto 0 auto;
+        padding: 50px;
+        border: 1px solid var(--faint);
+        background: rgba(255, 255, 255, 0.01);
+        position: relative;
+      }
+
+      .diferenciador::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40%;
+        height: 1px;
+        background: var(--cosmic-cyan);
+        box-shadow: 0 0 15px var(--cosmic-glow);
+      }
+
+      .diferenciador h3 {
+        font-family: var(--font-display);
+        font-size: 1.1rem;
+        color: var(--ink);
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        margin: 0 0 24px 0;
+      }
+
+      .diferenciador p {
+        font-size: 1.25rem;
+        color: var(--muted);
+        line-height: 1.75;
+        margin: 0;
+      }
+      
+      /* Proyectos */
+      .finishing-copy {
+        margin-bottom: 70px;
+      }
+      
+      .finishing-copy p {
+        font-size: 1.25rem;
+        color: var(--muted);
+        margin-top: 24px;
+        max-width: 650px;
+        line-height: 1.6;
+      }
+      
+      .project-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+      }
+      
+      .project-card {
+        border: 1px solid var(--faint);
+        background: rgba(165, 29, 24, 0.02);
+        padding: 45px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 280px;
+        text-decoration: none;
+        color: inherit;
+        position: relative;
+        overflow: hidden;
+        transition: all 400ms ease;
+      }
+      
+      .project-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at bottom right, rgba(239, 45, 39, 0.08), transparent 70%);
+        opacity: 0;
+        transition: opacity 400ms ease;
+      }
+
+      .project-card:hover,
+      .project-card:focus-visible {
+        border-color: var(--blood-red);
+        transform: translateY(-4px);
+        background: rgba(165, 29, 24, 0.05);
+      }
+
+      .project-card:hover::before {
+        opacity: 1;
+      }
+
+      .project-card.doc {
+        background: rgba(0, 210, 255, 0.015);
+      }
+      
+      .project-card.doc::before {
+        background: radial-gradient(circle at bottom right, rgba(0, 210, 255, 0.08), transparent 70%);
+      }
+
+      .project-card.doc:hover {
+        border-color: var(--cosmic-cyan);
+        background: rgba(0, 210, 255, 0.03);
+      }
+
+      .project-grid span {
+        color: var(--blood-red-bright);
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-family: var(--font-display);
+        position: relative;
+        z-index: 2;
+      }
+
+      .project-card.doc span {
+        color: var(--cosmic-cyan);
+      }
+      
+      .project-grid h3 {
+        font-family: var(--font-display);
+        font-size: 1.8rem;
+        font-weight: 400;
+        margin: 14px 0 24px 0;
+        letter-spacing: 2px;
+        color: var(--ink);
+        position: relative;
+        z-index: 2;
+      }
+
+      .project-quote {
+        font-style: italic;
+        color: var(--muted);
+        font-size: 1.15rem;
+        line-height: 1.5;
+        border-left: 2px solid var(--blood-red);
+        padding-left: 18px;
+        position: relative;
+        z-index: 2;
+        margin: 0;
+      }
+      
+      .project-card.doc .project-quote {
+        border-left-color: var(--cosmic-cyan);
+      }
+
+      /* ==========================================================================
+         EL ARCHIVO (GEMINI AI CHAT)
+         ========================================================================== */
+      .oracle-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 900;
+        background: rgba(2, 2, 5, 0.9);
+        border: 1px solid var(--cosmic-cyan);
+        color: var(--cosmic-cyan);
+        font-family: var(--font-display);
+        font-size: 0.8rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        padding: 12px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        box-shadow: 0 0 15px var(--cosmic-glow);
+        transition: all 300ms ease;
+      }
+
+      .oracle-btn:hover {
+        background: var(--cosmic-cyan);
+        color: var(--black);
+        box-shadow: 0 0 25px var(--cosmic-glow);
+      }
+
+      .oracle-modal {
+        position: fixed;
+        bottom: 90px;
+        right: 30px;
+        width: 350px;
+        height: 500px;
+        background: rgba(2, 2, 5, 0.95);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        z-index: 900;
+        display: flex;
+        flex-direction: column;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(20px);
+        transition: all 400ms ease;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+      }
+
+      .oracle-modal.is-open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .oracle-header {
+        padding: 20px;
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .oracle-header h3 {
+        margin: 0;
+        font-family: var(--font-display);
+        color: var(--ink);
+        font-size: 1rem;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+      }
+
+      .close-oracle {
+        background: none;
+        border: none;
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 1.5rem;
+        transition: color 200ms ease;
+      }
+
+      .close-oracle:hover {
+        color: var(--blood-red-bright);
+      }
+
+      .oracle-chat {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .chat-msg {
+        font-family: var(--font-body);
+        font-size: 1.1rem;
+        line-height: 1.5;
+        max-width: 85%;
+        padding: 12px 16px;
+        border-radius: 4px;
+      }
+
+      .chat-msg.user {
+        align-self: flex-end;
+        background: rgba(244, 238, 231, 0.1);
+        color: var(--ink);
+        border: 1px solid var(--faint);
+      }
+
+      .chat-msg.bot {
+        align-self: flex-start;
+        background: transparent;
+        color: var(--cosmic-cyan);
+        border-left: 2px solid var(--cosmic-cyan);
+        font-style: italic;
+      }
+
+      .oracle-input-area {
+        padding: 15px;
+        border-top: 1px solid var(--line);
+        display: flex;
+        gap: 10px;
+      }
+
+      .oracle-input {
+        flex: 1;
+        background: transparent;
+        border: 1px solid var(--faint);
+        color: var(--ink);
+        padding: 10px 15px;
+        font-family: var(--font-body);
+        font-size: 1.1rem;
+        border-radius: 4px;
+        outline: none;
+        transition: border-color 200ms ease;
+      }
+
+      .oracle-input:focus {
+        border-color: var(--cosmic-cyan);
+      }
+
+      .oracle-send {
+        background: transparent;
+        border: 1px solid var(--cosmic-cyan);
+        color: var(--cosmic-cyan);
+        padding: 0 15px;
+        cursor: pointer;
+        font-family: var(--font-display);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-radius: 4px;
+        transition: all 200ms ease;
+      }
+
+      .oracle-send:hover {
+        background: var(--cosmic-cyan);
+        color: var(--black);
+      }
+
+      /* Loader */
+      .typing-indicator {
+        display: none;
+        align-self: flex-start;
+        color: var(--muted);
+        font-style: italic;
+        font-size: 0.9rem;
+      }
+
+      /* ==========================================================================
+         FOOTER
+         ========================================================================== */
+      .site-footer {
+        padding: 60px 40px;
+        text-align: center;
+        border-top: 1px solid var(--faint);
+        background: var(--black);
+      }
+      
+      .site-footer p {
+        font-family: var(--font-display);
+        font-size: 0.75rem;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin: 0;
+      }
+      
+      /* ==========================================================================
+         RESPONSIVO (MÓVILES Y TABLETS)
+         ========================================================================== */
+      @media (max-width: 980px) {
+        .site-header {
+          padding: 16px 20px;
+        }
+
+        .main-nav {
+          gap: 16px;
+        }
+      
+        .main-nav a {
+          font-size: 0.65rem;
+          letter-spacing: 1px;
+        }
+      
+        .section {
+          padding: 80px 24px;
+        }
+
+        .hero-background-wrapper {
+          margin-top: 80px;
+          /* En móvil forzamos que se cubra más área para que no se vea tan pequeño */
+          background-size: cover; 
+          aspect-ratio: auto;
+          height: 50vh;
+        }
+      
+        .intrigue {
+          margin-bottom: 70px;
+          font-size: 1.1rem;
+        }
+        
+        .intrigue::before, .intrigue::after {
+          display: none; /* Quitamos las líneas laterales en móvil para ahorrar espacio */
+        }
+      
+        .narrative-grid,
+        .founder-grid,
+        .principles,
+        .process-layout,
+        .project-grid {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+      
+        .cosmic-banner {
+          padding: 70px 24px;
+          margin: 60px 0;
+        }
+
+        .diferenciador {
+          padding: 30px 24px;
+          margin-top: 70px;
+        }
+      }
+    </style>
   </head>
   <body>
     <div class="intro-portal" id="introPortal" aria-label="Portal de introducción">
       <div class="intro-video-layer" id="introVideoLayer">
+        <!-- Video introductorio de Vimeo -->
         <iframe
           id="introVimeo"
           src="https://player.vimeo.com/video/1204784143?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=0&loop=0&controls=0"
@@ -41,16 +1014,16 @@
         </button>
       </div>
 
-      <!-- Permite saltar el video y ver las opciones de inmediato -->
       <button class="intro-skip" id="btnSkip" type="button">Saltar intro</button>
     </div>
 
+    <!-- Navegación Original Restaurada -->
     <header class="site-header" aria-label="Navegación principal">
       <nav class="main-nav">
-        <a href="#home">Home</a>
+        <a href="#home">Inicio</a>
         <a href="#historia">Nuestra Historia</a>
         <a href="#manifiesto">Manifiesto</a>
-        <a href="#proceso">Proceso</a>
+        <a href="#proceso">Metodología</a>
         <a href="#proyectos">Proyectos</a>
         <a href="herencia.html" class="nav-herencia">La Herencia Maldita</a>
       </nav>
@@ -58,77 +1031,72 @@
 
     <main>
       <section class="home-hero" id="home" aria-label="Portada Principal">
-        <div class="hero-background-wrapper"></div>
-        <div class="hero-footer">
+        <img src="eclipse-portada.png" alt="Eclipse Estudios" class="hero-main-image" onerror="this.src='https://i.imgur.com/2Xy5f1N.jpeg'">
+        <div class="hero-footer reveal">
           <p class="hero-lead">Cine hecho con alma, mente y cuerpo, no por algoritmos.</p>
         </div>
       </section>
 
       <section class="section" id="historia" aria-labelledby="historia-heading">
         <div class="section-shell">
-          <p class="intrigue">
-            Nos rebelamos contra la inmediatez del contenido efímero y esculpimos historias que obligan al espectador a pensar.
+          <p class="intrigue reveal">
+            Nos rebelamos contra la inmediatez del contenido efímero. Esculpimos historias memorables que obligan al espectador a cuestionar sus propios valores.
           </p>
-          <div class="narrative-grid">
+          <div class="narrative-grid reveal">
             <header class="section-heading">
-              <span>Origen</span>
-              <h2 id="historia-heading">La herencia de las historias potentes</h2>
+              <span>El Origen</span>
+              <h2 id="historia-heading">El valor de las historias potentes</h2>
             </header>
             <div class="text-block">
-              <h3>Filosofía y Origen</h3>
+              <h3>Filosofía de Trabajo</h3>
               <p>
-                Nace de la necesidad imperativa de su fundador, Rodrigo Carreño, de rescatar el valor de las historias potentes que dejan un impacto real y duradero en el espectador. En una era saturada de contenido rápido diseñado para redes sociales, Eclipse Estudios se rebela contra la inmediatez.
+                Eclipse Estudios nace de la necesidad imperativa de rescatar el cine que impacta de manera real y duradera. En una era saturada de contenido rápido y desechable diseñado para redes sociales, nos negamos a la inmediatez.
               </p>
               <p>
-                No creamos contenido desechable; esculpimos historias memorables que obligan al espectador a pensar, a cuestionar sus propios valores y a enfrentarse a dilemas morales que permanecen en su cabeza mucho tiempo después de que la pantalla se apaga.
+                Forjamos narrativas complejas y enfrentamos dilemas morales. Creemos que el verdadero arte audiovisual es aquel que permanece en la cabeza del espectador mucho tiempo después de que la pantalla se apaga.
               </p>
             </div>
           </div>
 
-          <div class="founders">
+          <div class="founders reveal">
             <h2>El Equipo Fundador</h2>
             <div class="founder-grid">
               <article>
                 <h3>Rodrigo Carreño</h3>
-                <p>Fundador y Director Ejecutivo</p>
+                <p>Fundador y Director. Motor principal del estudio. Orquesta el diseño sonoro meticuloso, la composición visual, la intención del color y el rigor de la entrega final del material optimizado.</p>
+                <span class="roles">Fundador · Director · DP · Postproductor</span>
               </article>
               <article>
                 <h3>Verónica Champion</h3>
-                <p>Mente Creativa / Cabeza detrás de todas las historias</p>
+                <p>Colaboradora clave en el desarrollo narrativo. Arquitecta de las historias y actualmente encargada de escribir el libro oficial de La Herencia Maldita, conectando los hilos profundos de cada proyecto.</p>
+                <span class="roles">Mente Creativa · Guionista · Escritora</span>
               </article>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="section alt" id="manifiesto" aria-labelledby="manifiesto-heading">
-        <div class="section-shell">
-          <div class="narrative-grid">
-            <header class="section-heading">
-              <span>Identidad</span>
-              <h2 id="manifiesto-heading">El Manifiesto de la Imaginación</h2>
-            </header>
-            <div class="text-block">
-              <h3>El Universo Conceptual</h3>
-              <p>
-                Conceptualmente, Eclipse Estudios no habita en la Tierra, sino en un universo infinito nacido de la imaginación de sus miembros donde toda historia puede hacerse realidad.
-              </p>
-              <p>
-                Los elementos visuales que nos definen —el mar profundo, el espacio masivo, el sol, la luna y los eclipses de luz— representan el estado de flujo creativo de nuestro equipo. Son la fuerza y la inspiración que nos sumerge por completo en el desarrollo de los guiones, la composición de las escenas y el montaje.
-              </p>
-            </div>
-          </div>
-          <div class="principles">
+      <!-- MANIFIESTO POTENCIADO Y RACIONAL -->
+      <section id="manifiesto">
+        <div class="cosmic-banner reveal">
+          <h2>Universo Creativo</h2>
+          <p>
+            Entendemos el cine como un arte colectivo y multidisciplinario. En Eclipse Estudios rompemos con las jerarquías rígidas tradicionales: aquí todos conocemos el proceso, nos complementamos ante la adversidad y permitimos que cada talento trabaje con su propio método para alcanzar la excelencia técnica.
+          </p>
+        </div>
+        
+        <div class="section-shell" style="margin: 0 auto; padding: 0 40px;">
+          <div class="principles reveal">
             <article>
-              <h2>Misión</h2>
+              <h2>Nuestra Misión</h2>
               <p>
-                Entregar productos audiovisuales de la más alta calidad, rigiéndonos bajo los estándares técnicos más exigentes de la industria actual, asegurando un entretenimiento profundo y un desarrollo de personajes impecable.
+                Entregar productos audiovisuales de la más alta calidad, rigiéndonos bajo los estándares técnicos más exigentes de la industria actual. Aseguramos un entretenimiento profundo y un desarrollo de personajes impecable.
               </p>
             </article>
             <article>
-              <h2>Visión</h2>
+              <h2>Nuestra Visión</h2>
               <p>
-                Convertir a Eclipse Estudios en la casa productora referente en cuanto a narrativa, técnicas audiovisuales y calidad cinematográfica (películas y series), logrando que los clientes depositen su confianza absoluta sabiendo que su proyecto estará hecho con el alma, la mente y el cuerpo.
+                Convertir a Eclipse Estudios en la casa productora referente en narrativa y calidad cinematográfica (películas y series). Logramos que el cliente deposite su confianza absoluta, sabiendo que su proyecto está hecho con alma, mente y cuerpo.
               </p>
             </article>
           </div>
@@ -137,54 +1105,314 @@
 
       <section class="section" id="proceso" aria-labelledby="proceso-heading">
         <div class="section-shell">
-          <header class="section-heading central">
-            <span>Metodología</span>
-            <h2 id="proceso-heading">Cómo esculpimos nuestras obras</h2>
+          <header class="section-heading central reveal">
+            <span>Metodología de Trabajo</span>
+            <h2 id="proceso-heading">Cómo desarrollamos nuestras producciones</h2>
           </header>
-          <div class="process-layout">
+          
+          <div class="process-layout reveal">
             <article>
-              <h3>01. Desarrollo Cinematográfico</h3>
-              <p>Absorbemos la complejidad técnica para que la historia fluya de manera pura desde el guion hasta el encuadre final.</p>
+              <h3>01. Preproducción (El Cimiento)</h3>
+              <p>Encender una cámara sin entender la historia es un error. Dedicamos un respeto sagrado al guion. Esta minuciosa planificación es nuestra mejor estrategia financiera: abaratamos costos y reducimos días de rodaje sin sacrificar calidad.</p>
             </article>
             <article>
-              <h3>02. Producción Todoterreno</h3>
-              <p>Nuestro equipo multidisciplinar domina cada etapa del proceso cinematográfico, adaptándonos al ritmo de la excelencia.</p>
+              <h3>02. Producción (Captura Real)</h3>
+              <p>Nuestros criterios son innegociables: iluminación expresiva, composición milimétrica y actuaciones auténticas. Fomentamos un ambiente de libertad creativa donde todo el equipo puede aportar para elevar el proyecto.</p>
             </article>
+            <article>
+              <h3>03. Postproducción (Acabado)</h3>
+              <p>Nos distanciamos de la estética digital limpia y pesada. Trabajamos el color con intención dramática y aplicamos un sutil granulado fílmico para entregar un acabado orgánico y puramente cinematográfico.</p>
+            </article>
+          </div>
+
+          <div class="diferenciador reveal">
+            <h3>¿Por qué elegirnos?</h3>
+            <p>
+              El cliente no tiene por qué conocer los problemas técnicos detrás de un rodaje. Es nuestra responsabilidad absoluta absorber la complejidad y entregar un producto audiovisual que supere cualquier expectativa. Somos un equipo todoterreno.
+            </p>
           </div>
         </div>
       </section>
 
-      <section class="section alt" id="proyectos" aria-labelledby="proyectos-heading">
+      <!-- NUEVA SECCIÓN: PORTFOLIO / SHOWREEL -->
+      <section class="section alt" id="portfolio" aria-labelledby="portfolio-heading">
         <div class="section-shell">
-          <div class="finishing-copy">
-            <header class="section-heading">
-              <span>Proyectos</span>
-              <h2 id="proyectos-heading">Herencia en Desarrollo</h2>
+          <div class="finishing-copy reveal">
+            <header class="section-heading central">
+              <span>Portafolio</span>
+              <h2 id="portfolio-heading">Nuestras Producciones</h2>
             </header>
-            <p>Explora nuestras próximas producciones y las historias literarias y cinematográficas en desarrollo.</p>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 40px;">
+              Una muestra de nuestra capacidad técnica y narrativa. Exploraciones visuales sobre la fragilidad del tiempo, el drama humano y la cinematografía independiente.
+            </p>
           </div>
-          <div class="project-grid">
-            <a class="project-card" href="herencia.html">
-              <span>Cortometraje / Serie</span>
-              <h3>La Herencia Maldita</h3>
-            </a>
-            <article class="project-card">
-              <span>Documental</span>
-              <h3>Archivo audiovisual</h3>
-            </article>
+          
+          <div class="reveal" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border: 1px solid var(--faint);">
+             <!-- Video de YouTube: Shape of my heart -->
+             <iframe 
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                src="https://www.youtube.com/embed/MFWeXkL3aF0?si=L42L0jMvQf7T3kI-" 
+                title="Shape of my heart — Cortometraje | Drama" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowfullscreen>
+            </iframe>
+          </div>
+          
+          <div style="text-align: center; margin-top: 40px;" class="reveal">
+              <a href="https://www.youtube.com/@Eclipse_Estudios_Peru" target="_blank" rel="noopener noreferrer" style="color: var(--cosmic-cyan); text-decoration: none; font-family: var(--font-display); letter-spacing: 2px; text-transform: uppercase; border-bottom: 1px solid var(--cosmic-cyan); padding-bottom: 5px; transition: all 0.3s ease;">
+                 Ver más en nuestro canal de YouTube &rarr;
+              </a>
           </div>
         </div>
       </section>
-    </main>
+
+      <section class="section" id="proyectos" aria-labelledby="proyectos-heading">
+    <!-- ==========================================================================
+         EL ARCHIVO (GEMINI AI CHAT) - AHORA COMO ASESOR DE PRODUCCIÓN
+         ========================================================================== -->
+    <button id="oracleBtnToggle" class="oracle-btn" aria-label="Consultar al Asesor">
+      Contacto y Asesoría
+    </button>
+
+    <div id="oracleModal" class="oracle-modal">
+      <div class="oracle-header">
+        <h3>Asesor Eclipse</h3>
+        <button id="closeOracle" class="close-oracle">&times;</button>
+      </div>
+      <div class="oracle-chat" id="oracleChat">
+        <div class="chat-msg bot">
+          Bienvenido a Eclipse Estudios. Soy el asistente de producción. ¿Tienes alguna duda sobre nuestros servicios, metodología de trabajo o quieres saber más sobre proyectos como 'La Herencia Maldita'?
+        </div>
+        <div id="typingIndicator" class="typing-indicator">Escribiendo respuesta...</div>
+      </div>
+      <div class="oracle-input-area">
+        <input type="text" id="oracleInput" class="oracle-input" placeholder="Escribe tu consulta..." autocomplete="off" />
+        <button id="oracleSendBtn" class="oracle-send">Enviar</button>
+      </div>
+    </div>
 
     <footer class="site-footer">
-      <p>© <span id="year"></span> Eclipse Estudios. Todos los derechos reservados.</p>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; margin-bottom: 40px;">
+          <h3 style="font-family: var(--font-display); color: var(--ink); margin: 0; letter-spacing: 3px; font-size: 1.2rem;">Contacto</h3>
+          <p style="font-size: 1.1rem; color: var(--muted); text-transform: none; letter-spacing: normal;">¿Tienes un proyecto en mente? Escríbenos a:<br>
+          <a href="mailto:eclipse.estudios.peru@gmail.com" style="color: var(--cosmic-cyan); text-decoration: none; font-weight: bold;">eclipse.estudios.peru@gmail.com</a></p>
+          
+          <div style="display: flex; gap: 30px; margin-top: 10px;">
+              <a href="https://www.youtube.com/@Eclipse_Estudios_Peru" target="_blank" rel="noopener noreferrer" style="color: var(--muted); text-decoration: none; transition: color 0.3s ease; font-family: var(--font-display); letter-spacing: 2px; font-size: 0.9rem;">
+                  [ YOUTUBE ]
+              </a>
+              <a href="https://www.tiktok.com/@eclipse.estudios.peru?_r=1&_t=ZS-97d3NXJVd0T" target="_blank" rel="noopener noreferrer" style="color: var(--muted); text-decoration: none; transition: color 0.3s ease; font-family: var(--font-display); letter-spacing: 2px; font-size: 0.9rem;">
+                  [ TIKTOK ]
+              </a>
+          </div>
+      </div>
+      
+      <p style="border-top: 1px solid var(--faint); padding-top: 20px; font-size: 0.7rem;">© <span id="year"></span> Eclipse Estudios. Todos los derechos reservados.</p>
     </footer>
 
     <script src="https://player.vimeo.com/api/player.js"></script>
-    <script src="script.js"></script>
     <script>
-      document.getElementById("year").textContent = new Date().getFullYear()
+      document.addEventListener("DOMContentLoaded", () => {
+        // Año dinámico
+        const yearEl = document.getElementById("year");
+        if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+        // Portal de Intro
+        const introPortal = document.getElementById("introPortal")
+        const introVideoLayer = document.getElementById("introVideoLayer")
+        const portalOptions = document.getElementById("portalOptions")
+        const btnHorror = document.getElementById("btnHorror")
+        const btnCosmic = document.getElementById("btnCosmic")
+        const btnSkip = document.getElementById("btnSkip")
+        const introFrame = document.getElementById("introVimeo")
+      
+        if (introPortal) {
+          const revealOptions = () => {
+            if (introVideoLayer) introVideoLayer.classList.add("is-fading")
+            window.setTimeout(() => {
+              if (introVideoLayer) introVideoLayer.setAttribute("aria-hidden", "true")
+              if (portalOptions) portalOptions.classList.add("is-visible")
+            }, 900)
+          }
+        
+          const closeIntroPortal = () => {
+            introPortal.classList.add("is-closed")
+            window.setTimeout(() => {
+              introPortal.setAttribute("hidden", "")
+              introPortal.remove() 
+            }, 800)
+          }
+        
+          if (btnHorror) {
+            btnHorror.addEventListener("click", () => {
+              window.location.href = "herencia.html"
+            })
+          }
+        
+          if (btnCosmic) btnCosmic.addEventListener("click", closeIntroPortal)
+          if (btnSkip) btnSkip.addEventListener("click", revealOptions)
+        
+          if (window.Vimeo && introFrame) {
+            const player = new window.Vimeo.Player(introFrame)
+            player.setVolume(1)
+            player.play().catch(() => {
+              introPortal.classList.add("needs-sound-gesture")
+            })
+            player.on("ended", revealOptions)
+            window.setTimeout(revealOptions, 30000)
+          } else {
+            revealOptions()
+          }
+        
+          introPortal.addEventListener("click", () => {
+            if (introPortal.classList.contains("needs-sound-gesture")) {
+              introPortal.classList.remove("needs-sound-gesture")
+              if (window.Vimeo && introFrame) {
+                const player = new window.Vimeo.Player(introFrame)
+                player.setVolume(1)
+                player.play()
+              }
+            }
+          })
+        }
+
+        // Animaciones al hacer Scroll
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOptionsScroll = {
+          threshold: 0.15,
+          rootMargin: "0px 0px -50px 0px"
+        };
+
+        const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('active');
+            observer.unobserve(entry.target);
+          });
+        }, revealOptionsScroll);
+
+        revealElements.forEach(el => revealOnScroll.observe(el));
+
+        // ==========================================================================
+        // LÓGICA DE "EL ARCHIVO" (GEMINI AI)
+        // ==========================================================================
+        const oracleBtnToggle = document.getElementById('oracleBtnToggle');
+        const oracleModal = document.getElementById('oracleModal');
+        const closeOracle = document.getElementById('closeOracle');
+        const oracleChat = document.getElementById('oracleChat');
+        const oracleInput = document.getElementById('oracleInput');
+        const oracleSendBtn = document.getElementById('oracleSendBtn');
+        const typingIndicator = document.getElementById('typingIndicator');
+
+        let chatHistory = [];
+
+        // Toggle Modal
+        if(oracleBtnToggle && oracleModal && closeOracle) {
+          oracleBtnToggle.addEventListener('click', () => {
+            oracleModal.classList.toggle('is-open');
+          });
+          closeOracle.addEventListener('click', () => {
+            oracleModal.classList.remove('is-open');
+          });
+        }
+
+        // Add message to UI
+        function appendMessage(text, sender) {
+          const msgDiv = document.createElement('div');
+          msgDiv.classList.add('chat-msg', sender);
+          msgDiv.textContent = text;
+          
+          // Insert before typing indicator
+          oracleChat.insertBefore(msgDiv, typingIndicator);
+          oracleChat.scrollTop = oracleChat.scrollHeight;
+        }
+
+        // Call Gemini API
+        async function fetchGeminiResponse(userText) {
+          // Add user message to history
+          chatHistory.push({ role: "user", parts: [{ text: userText }] });
+          
+          const systemPrompt = `Eres el Asistente de Producción virtual de Eclipse Estudios, una productora audiovisual profesional en Perú. 
+          Tu objetivo es atender a posibles clientes, responder dudas sobre los servicios y explicar la metodología del estudio.
+          Debes sonar profesional, directo, racional y resolutivo. NO uses un lenguaje excesivamente poético ni críptico.
+          
+          Información clave de Eclipse Estudios:
+          - Lema: Cine hecho con alma, mente y cuerpo, no por algoritmos.
+          - Equipo Fundador: Rodrigo Carreño (Fundador, Director, DP, Postproductor) y Verónica Champion (Guionista, Escritora).
+          - Contacto: eclipse.estudios.peru@gmail.com
+          - Redes: YouTube (@Eclipse_Estudios_Peru) y TikTok (@eclipse.estudios.peru).
+          - Metodología: 1. Preproducción rigurosa para optimizar costos. 2. Producción con iluminación expresiva y actuación auténtica. 3. Postproducción con acabado orgánico (grano cinematográfico, color dramático), alejados del look digital plástico.
+          - Diferenciador: Equipo todoterreno que absorbe la complejidad técnica para entregar productos de altísima calidad audiovisual. No son una agencia tradicional.
+          - Proyectos actuales: "La Herencia Maldita" (Libro/Corto/Serie de terror psicológico escrito por Verónica Champion) y "Shape of My Heart" (Cortometraje de drama).
+          
+          Si el usuario pide contacto, proporciónales el correo: eclipse.estudios.peru@gmail.com
+          Tus respuestas deben ser concisas (máximo 2-3 frases breves). Nunca uses emojis.`;
+
+          const apiKey = ""; // API Key provided automatically by environment
+          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+          const payload = {
+            contents: chatHistory,
+            systemInstruction: {
+              parts: [{ text: systemPrompt }]
+            }
+          };
+
+          try {
+            const response = await fetch(apiUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+            
+            if (result.candidates && result.candidates[0].content) {
+              const botReply = result.candidates[0].content.parts[0].text;
+              
+              // Add bot reply to history
+              chatHistory.push({ role: "model", parts: [{ text: botReply }] });
+              return botReply;
+            } else {
+              return "El eco se pierde en el vacío. Inténtalo de nuevo.";
+            }
+          } catch (error) {
+            console.error("Error connecting to the archive:", error);
+            return "Las sombras oscurecen la conexión. Acércate más tarde.";
+          }
+        }
+
+        // Handle Send
+        async function handleSend() {
+          const text = oracleInput.value.trim();
+          if (!text) return;
+
+          // Clean input and show user message
+          oracleInput.value = '';
+          appendMessage(text, 'user');
+
+          // Show typing indicator
+          typingIndicator.style.display = 'block';
+          oracleSendBtn.disabled = true;
+
+          // Fetch response
+          const botResponse = await fetchGeminiResponse(text);
+
+          // Hide typing indicator and show bot message
+          typingIndicator.style.display = 'none';
+          oracleSendBtn.disabled = false;
+          appendMessage(botResponse, 'bot');
+          
+          // Focus input again
+          oracleInput.focus();
+        }
+
+        if(oracleSendBtn && oracleInput) {
+          oracleSendBtn.addEventListener('click', handleSend);
+          oracleInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleSend();
+          });
+        }
+      });
     </script>
-  </body>
-</html>
