@@ -300,20 +300,18 @@
         background: var(--black);
       }
       
-      /* Contenedor que mantiene la proporción 16:9 para la imagen principal */
-      .hero-background-wrapper {
-        width: 100%;
-        max-width: 1080px;
-        aspect-ratio: 16 / 9;
-        margin-top: 100px;
-        /* Usamos tu imagen original */
-        background-image: url("portada-eclipse.png");
-        background-size: contain;
-        background-position: center;
-        background-repeat: no-repeat;
-        /* Efecto de resplandor para fusionar la imagen con el fondo */
-        filter: drop-shadow(0 0 40px rgba(0, 210, 255, 0.15));
-      }
+		/* Portada con etiqueta <img> */
+	.hero-main-image {
+		width: 100%;
+		max-width: 900px; /* Aquí controlas el tamaño. 900px o 1000px queda muy bien */
+		display: block;
+		margin: 100px auto 0 auto; /* El "auto" a los lados la mantiene centrada */
+		object-fit: contain;
+		/* Efecto de resplandor sutil */
+		filter: drop-shadow(0 0 40px rgba(0, 210, 255, 0.15));
+		position: relative;
+		z-index: 1;
+	  }
       
       .hero-footer {
         position: relative;
