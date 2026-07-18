@@ -1,221 +1,1341 @@
 <!DOCTYPE html>
+<!-- saved from url=(0098)file:///C:/Users/rodri/OneDrive/Escritorio/Eclipse%20Web%20final/la-herencia-maldita/herencia.html -->
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="La Herencia Maldita: libro y proyecto audiovisual de Eclipse Estudios. Una historia de Veronica Champion y Rodrigo Carreño. Descubre las pistas."
-    />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="La Herencia Maldita: libro y proyecto de Eclipse Estudios. Una historia de Veronica Champion y Rodrigo Carreño.">
     <title>La Herencia Maldita — Eclipse Estudios</title>
+    
+    <!-- Enlaces de tipografías oficiales de Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS para renderizado fluido y responsive -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap"
-      rel="stylesheet"
-    />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['Cinzel', 'serif'],
+                        serif: ['Cormorant Garamond', 'serif'],
+                        eslogan: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
 
-    <link rel="stylesheet" href="herencia.css" />
-  </head>
-  <body class="herencia-body">
-    <header class="herencia-header">
-      <a href="index.html" class="back-link" aria-label="Volver a Eclipse Estudios">&larr; Eclipse Estudios</a>
-    </header>
+    <style>
+        :root {
+            --blood-red: #8a1410;
+            --blood-red-bright: #e62219;
+            --ink: #f4eee7;
+            --black: #050505;
+        }
 
-    <main>
-      <!-- HERO -->
-      <section class="herencia-hero">
-        <div class="herencia-hero-veil"></div>
-        <div class="herencia-hero-content">
-          <span class="herencia-kicker">Un proyecto de Eclipse Estudios</span>
-          <h1 class="herencia-title">La Herencia Maldita</h1>
-          <p class="herencia-tagline">
-            Toda historia deja una herencia, pero no toda herencia es un regalo.
-          </p>
-          <p class="herencia-credits">
-            Historia original de Veronica Champion y Rodrigo Carreño · Escrita por Veronica Champion
-          </p>
+        body {
+            background-color: var(--black);
+            color: var(--ink);
+            font-family: 'Cormorant Garamond', serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .font-display { font-family: 'Cinzel', serif; }
+        .font-eslogan { font-family: 'Playfair Display', serif; }
+
+        /* TRATAMIENTO DE FONDOS CINEMÁTICOS PARA LAS SECCIONES */
+        #hero-section {
+            background-image: linear-gradient(to bottom, rgba(5, 5, 5, 0.9) 0%, rgba(5, 5, 5, 0.45) 50%, rgba(5, 5, 5, 0.95) 100%), url('cara en arboles.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        #umbral {
+            background-image: linear-gradient(to bottom, rgba(5, 5, 5, 0.95) 0%, rgba(5, 5, 5, 0.65) 50%, rgba(3, 3, 3, 0.98) 100%), url('calle blanco y negro.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        #acertijo {
+            background-image: linear-gradient(to bottom, rgba(3, 3, 3, 0.98) 0%, rgba(3, 3, 3, 0.7) 50%, rgba(2, 2, 2, 0.98) 100%), url('arbol misterioso.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        #universo {
+            background-image: linear-gradient(to bottom, rgba(2, 2, 2, 0.98) 0%, rgba(2, 2, 2, 0.6) 50%, rgba(3, 3, 3, 0.98) 100%), url('mar solitario.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        #origen {
+            background-image: linear-gradient(to bottom, rgba(3, 3, 3, 0.98) 0%, rgba(3, 3, 3, 0.65) 50%, rgba(2, 2, 2, 0.98) 100%), url('bosque denso.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        #expedientes {
+            background-image: linear-gradient(to bottom, rgba(2, 2, 2, 0.98) 0%, rgba(2, 2, 2, 0.7) 50%, rgba(2, 2, 2, 0.98) 100%), url('cuervos.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* ANIMACIÓN SECUENCIAL HERO LANDING - ENTRADAS CINEMÁTICAS */
+        @keyframes cinematic-title-reveal {
+            0% { opacity: 0; filter: blur(15px); transform: scale(0.96); }
+            100% { opacity: 1; filter: blur(0); transform: scale(1); }
+        }
+
+        @keyframes cinematic-reveal {
+            0% { opacity: 0; filter: blur(12px); transform: translateY(15px); }
+            100% { opacity: 1; filter: blur(0); transform: translateY(0); }
+        }
+
+        @keyframes cinematic-reveal-half {
+            0% { opacity: 0; filter: blur(12px); transform: translateY(15px); }
+            100% { opacity: 0.5; filter: blur(0); transform: translateY(0); }
+        }
+
+        @keyframes cinematic-reveal-40 {
+            0% { opacity: 0; filter: blur(12px); transform: translateY(15px); }
+            100% { opacity: 0.4; filter: blur(0); transform: translateY(0); }
+        }
+
+        @keyframes cinematic-reveal-30 {
+            0% { opacity: 0; filter: blur(10px); transform: translateY(10px); }
+            100% { opacity: 0.3; filter: blur(0); transform: translateY(0); }
+        }
+
+        /* Declaración de retrasos y ejecuciones progresivas de carga */
+        .anim-delay-title {
+            animation: cinematic-title-reveal 2.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards, subtle-glow 6s infinite ease-in-out 2.5s;
+            opacity: 0;
+            will-change: opacity, filter, transform;
+        }
+
+        .anim-delay-tagline {
+            animation: cinematic-reveal 1.8s cubic-bezier(0.16, 1, 0.3, 1) 2.3s forwards;
+            opacity: 0;
+            will-change: opacity, filter, transform;
+        }
+
+        .anim-delay-nav {
+            animation: cinematic-reveal 1.8s cubic-bezier(0.16, 1, 0.3, 1) 2.3s forwards;
+            opacity: 0;
+            will-change: opacity, filter, transform;
+        }
+
+        .anim-delay-author-label {
+            animation: cinematic-reveal-half 1.2s cubic-bezier(0.16, 1, 0.3, 1) 3.3s forwards;
+            opacity: 0;
+            will-change: opacity, filter, transform;
+        }
+
+        .anim-delay-author-names {
+            animation: cinematic-reveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) 3.8s forwards;
+            opacity: 0;
+            will-change: opacity, filter, transform;
+        }
+
+        .anim-delay-author-written {
+            animation: cinematic-reveal-40 1.2s cubic-bezier(0.16, 1, 0.3, 1) 4.3s forwards;
+            opacity: 0;
+            will-change: opacity, filter, transform;
+        }
+
+        .anim-delay-desciende {
+            animation: cinematic-reveal-30 1.5s cubic-bezier(0.16, 1, 0.3, 1) 5.3s forwards;
+            opacity: 0;
+            will-change: opacity, filter, transform;
+        }
+
+        @keyframes subtle-glow {
+            0%, 100% { 
+                text-shadow: 0 0 10px rgba(138, 20, 16, 0.4), 0 0 20px rgba(138, 20, 16, 0.2);
+                transform: scale(1);
+            }
+            50% { 
+                text-shadow: 0 0 30px rgba(230, 34, 25, 0.8), 0 0 50px rgba(230, 34, 25, 0.4);
+                transform: scale(1.02);
+            }
+        }
+
+        .hero-title-anim {
+            color: #ff1a1a;
+        }
+
+        /* Estilo para el menú superior horizontal */
+        .glass-nav {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(244, 238, 231, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        /* Botón de retorno Eclipse Estudios flotante en el bottom-left con despliegue progresivo */
+        .glass-nav-back {
+            background: rgba(10, 10, 10, 0.65);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(244, 238, 231, 0.1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 32px; /* Estado comprimido: solo muestra la flecha */
+            height: 34px;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            white-space: nowrap;
+            padding-left: 10px;
+        }
+
+        .glass-nav-back:hover {
+            width: 120px; /* Desplegado completamente */
+            border-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 22px rgba(255, 255, 255, 0.7);
+            background: rgba(15, 15, 15, 0.9);
+            padding-right: 10px;
+        }
+
+        /* Animación para el bloque de texto oculto en el estado comprimido */
+        .glass-nav-back .nav-text {
+            opacity: 0;
+            transform: translateX(-12px);
+            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                        transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+
+        .glass-nav-back:hover .nav-text {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+
+        .glass-nav-back:hover span, 
+        .glass-nav-back:hover div span {
+            color: #ffffff !important;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+        }
+
+        /* Clases de margen para anclaje de scroll fluido perfectamente balanceado */
+        .scroll-mt-section {
+            scroll-margin-top: 5.5rem;
+        }
+
+        /* Sistema de animación Scroll-Reveal Premium */
+        .reveal-hidden {
+            opacity: 0;
+            transform: translateY(35px);
+            filter: blur(6px);
+            transition: opacity 1.2s cubic-bezier(0.215, 0.610, 0.355, 1), 
+                        transform 1.2s cubic-bezier(0.215, 0.610, 0.355, 1), 
+                        filter 1.2s cubic-bezier(0.215, 0.610, 0.355, 1);
+        }
+
+        .reveal-visible {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+
+        /* Botón Desciende: Posicionado de forma absoluta bien pegado al borde inferior */
+        .desciende-container {
+            position: absolute !important;
+            bottom: 0.25rem !important; 
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 30;
+        }
+
+        /* Tarjetas del expediente interactivo */
+        .clue-card {
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.85) 0%, rgba(2, 2, 2, 0.9) 100%);
+            border: 2px solid rgba(244, 238, 231, 0.1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .clue-card:hover {
+            border-color: var(--blood-red);
+            box-shadow: inset 0 0 20px rgba(138, 20, 16, 0.2);
+        }
+
+        .clue-card.active {
+            border-color: var(--blood-red-bright);
+            background: rgba(138, 20, 16, 0.1);
+        }
+
+        .reveal-text {
+            max-height: 0;
+            opacity: 0;
+            transition: all 0.6s ease;
+            overflow: hidden;
+        }
+
+        .clue-card.active .reveal-text {
+            max-height: 500px;
+            opacity: 1;
+            margin-top: 1rem;
+        }
+
+        /* Contenedor de Imágenes de Evidencia Grandes */
+        .clue-image-container {
+            width: 180px !important;
+            height: 180px !important;
+            flex-shrink: 0;
+            background-color: rgba(15, 15, 15, 0.6);
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid rgba(244, 238, 231, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 640px) {
+            .clue-image-container {
+                width: 140px !important;
+                height: 140px !important;
+                margin-top: 1rem;
+            }
+        }
+
+        .clue-image {
+            max-width: 100% !important;
+            max-height: 100% !important;
+            object-fit: contain !important;
+            filter: grayscale(1) brightness(0.4) contrast(1.1);
+            opacity: 0.7;
+            transition: transform 0.5s ease, filter 0.5s ease, opacity 0.5s ease;
+        }
+
+        .clue-image:hover {
+            transform: scale(1.08);
+            filter: grayscale(0) brightness(1.1) contrast(1) drop-shadow(0 0 12px rgba(255, 255, 255, 0.85)) !important;
+            opacity: 1;
+        }
+
+        .emerge-from-shadows {
+            animation: emerge 1.5s ease-out forwards;
+        }
+
+        @keyframes emerge {
+            from { opacity: 0; transform: translateY(40px); filter: blur(10px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        /* Libro Grimorio Flotante libre de caja con sombra centrada */
+        .grimorio-book {
+            width: 160px !important;
+            height: auto !important;
+            display: block;
+            margin: 0 auto;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: drop-shadow(0 0 15px rgba(138, 20, 16, 0.5)) !important;
+        }
+
+        .grimorio-book:hover {
+            transform: scale(1.1) translateY(-10px);
+            filter: drop-shadow(0 0 30px rgba(230, 34, 25, 0.85)) !important;
+        }
+
+        /* Tarjetas de Expedientes de Personajes */
+        .char-card {
+            background: linear-gradient(180deg, rgba(10, 10, 10, 0.9) 0%, rgba(3, 3, 3, 0.95) 100%);
+            border: 1px solid rgba(244, 238, 231, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .char-card:hover {
+            border-color: var(--blood-red);
+            box-shadow: 0 10px 30px rgba(138, 20, 16, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .char-portrait {
+            filter: grayscale(1) brightness(0.5) contrast(1.1);
+            transition: all 0.5s ease;
+        }
+
+        .char-card:hover .char-portrait {
+            filter: grayscale(0) brightness(1) contrast(1) drop-shadow(0 0 15px rgba(138, 20, 16, 0.4));
+        }
+
+        /* Tarjeta Exclusiva del Ente Demoniaco Kaelinor */
+        .char-card-demon {
+            background: linear-gradient(180deg, #120202 0%, #000000 100%);
+            border: 1px solid rgba(138, 20, 16, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .char-card-demon:hover {
+            border-color: var(--blood-red-bright);
+            box-shadow: 0 0 35px rgba(230, 34, 25, 0.6);
+            transform: translateY(-4px) scale(1.02);
+        }
+
+        .char-portrait-demon {
+            filter: grayscale(1) brightness(0.3) contrast(1.3);
+            transition: all 0.5s ease;
+        }
+
+        @keyframes demonic-glitch {
+            0%, 100% { transform: translate(0, 0) scale(1); filter: grayscale(1) brightness(0.3) contrast(1.3); }
+            15% { transform: translate(-2px, 2px) scale(1.04); filter: grayscale(0.2) sepia(1) hue-rotate(-50deg) saturate(4) brightness(0.5) contrast(1.6) drop-shadow(0 0 20px rgba(230, 34, 25, 0.85)); }
+            30% { transform: translate(1px, -2px) scale(0.98); filter: grayscale(0.6) brightness(0.4); }
+            45% { transform: translate(-1px, 2px) scale(1.02); filter: sepia(1) hue-rotate(-50deg) saturate(5) brightness(0.4) contrast(1.8) drop-shadow(0 0 30px rgba(138, 20, 16, 1)); }
+            60% { transform: translate(2px, -1px) scale(1.01); filter: grayscale(0.8) brightness(0.3); }
+            75% { transform: translate(-2px, -2px) scale(0.99); filter: sepia(0.8) hue-rotate(-50deg) saturate(3) brightness(0.4) contrast(1.5) drop-shadow(0 0 25px rgba(230, 34, 25, 0.7)); }
+            90% { transform: translate(1px, 1px) scale(1.03); filter: grayscale(0) brightness(0.4); }
+        }
+
+        .char-card-demon:hover .char-portrait-demon {
+            animation: demonic-glitch 0.25s infinite linear;
+        }
+
+        /* Rosa Blanca con estados interactivos */
+        .rose-img {
+            width: 180px;
+            height: auto;
+            filter: grayscale(1) brightness(0.4) contrast(1.1);
+            opacity: 0.15;
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .rose-img:hover {
+            opacity: 0.25;
+            filter: grayscale(1) brightness(0.6) contrast(1.1);
+        }
+
+        /* TOQUE 1: Estremecimiento suave */
+        @keyframes rose-shiver-1 {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            30% { transform: scale(1.08) rotate(-2deg); }
+            70% { transform: scale(0.96) rotate(2deg); }
+        }
+        .rose-shiver-light {
+            animation: rose-shiver-1 0.4s ease-in-out !important;
+        }
+
+        /* TOQUE 2: Estremecimiento mediano + vibración continua */
+        @keyframes rose-shiver-2 {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            20% { transform: scale(1.12) rotate(-5deg); }
+            50% { transform: scale(0.92) rotate(4deg); }
+            80% { transform: scale(1.05) rotate(-2deg); }
+        }
+        .rose-shiver-medium {
+            animation: rose-shiver-2 0.5s ease-in-out !important;
+        }
+
+        @keyframes rose-micro-vibrate {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-0.5px, 0.5px) rotate(-0.3deg); }
+            75% { transform: translate(0.5px, -0.5px) rotate(0.3deg); }
+        }
+        .rose-idle-vibrate {
+            animation: rose-micro-vibrate 0.15s infinite linear;
+        }
+
+        /* TOQUE 3: Latido/Respiración Suave (Blanco Angelical) */
+        @keyframes rose-breath {
+            0%, 100% { 
+                transform: scale(1); 
+                filter: grayscale(0) brightness(1.2) drop-shadow(0 0 25px rgba(255, 255, 255, 0.8));
+            }
+            50% { 
+                transform: scale(1.08); 
+                filter: grayscale(0) brightness(1.5) drop-shadow(0 0 55px rgba(255, 255, 255, 1));
+            }
+        }
+        .rose-glowing-heartbeat {
+            animation: rose-breath 2.5s infinite ease-in-out !important;
+            opacity: 1 !important;
+        }
+
+        /* TOQUES 4 Y 5: Progresión a Sangre Irritada */
+        @keyframes rose-irritated-breath {
+            0%, 100% { 
+                transform: scale(1); 
+                filter: sepia(0.5) hue-rotate(-50deg) saturate(2) brightness(1) drop-shadow(0 0 25px rgba(220, 38, 25, 0.7));
+            }
+            50% { 
+                transform: scale(1.08); 
+                filter: sepia(0.6) hue-rotate(-50deg) saturate(2.5) brightness(1.1) drop-shadow(0 0 50px rgba(220, 38, 25, 1));
+            }
+        }
+        .rose-glowing-irritated {
+            animation: rose-irritated-breath 2s infinite ease-in-out !important;
+            opacity: 1 !important;
+        }
+
+        /* TOQUE 6: Progresión Ira Amenazante */
+        @keyframes rose-angry-breath {
+            0%, 100% { 
+                transform: scale(1); 
+                filter: sepia(1) hue-rotate(-50deg) saturate(4) brightness(0.9) drop-shadow(0 0 35px rgba(138, 20, 16, 0.9));
+            }
+            50% { 
+                transform: scale(1.12); 
+                filter: sepia(1) hue-rotate(-50deg) saturate(5) brightness(1.1) drop-shadow(0 0 65px rgba(230, 34, 25, 1));
+            }
+        }
+        .rose-glowing-angry {
+            animation: rose-angry-breath 1.2s infinite ease-in-out !important;
+            opacity: 1 !important;
+        }
+
+        /* Bloqueo total de eventos interactivos y cursor por defecto */
+        .pointer-events-none {
+            pointer-events: none !important;
+            cursor: default !important;
+        }
+
+        .shake-input {
+            animation: shake 0.4s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+    </style>
+</head>
+<body class="selection:bg-red-900 selection:text-white">
+
+    <!-- Menú de opciones unificado en Cormorant Garamond (Ocupa todo el ancho de la página con espaciado elegante) -->
+    <nav class="fixed top-4 left-4 right-4 z-50 glass-nav px-6 py-2.5 rounded flex items-center justify-center anim-delay-nav">
+        <!-- Escritorio: Fila de opciones con espaciado elegante distribuido a lo ancho -->
+        <div class="hidden lg:flex items-center justify-between w-full max-w-6xl mx-auto">
+            <a href="#umbral" class="font-serif text-[10px] tracking-[3px] text-stone-400 hover:text-red-500 transition-all duration-300 uppercase">El umbral</a>
+            <a href="#acertijo" class="font-serif text-[10px] tracking-[3px] text-stone-400 hover:text-red-500 transition-all duration-300 uppercase">El acertijo</a>
+            <a href="#universo" class="font-serif text-[10px] tracking-[3px] text-stone-400 hover:text-red-500 transition-all duration-300 uppercase">El universo</a>
+            <a href="#origen" class="font-serif text-[10px] tracking-[3px] text-stone-400 hover:text-red-500 transition-all duration-300 uppercase">El origen</a>
+            <a href="#expedientes" class="font-serif text-[10px] tracking-[3px] text-stone-400 hover:text-red-500 transition-all duration-300 uppercase">Los expedientes</a>
+            <a href="#comunidad" class="font-serif text-[10px] tracking-[3px] text-stone-400 hover:text-red-500 transition-all duration-300 uppercase">La comunidad</a>
+            <a href="#podcast" class="font-serif text-[10px] tracking-[3px] text-stone-400 hover:text-red-500 transition-all duration-300 uppercase">El podcast</a>
         </div>
-        <div class="herencia-scroll-hint" aria-hidden="true">Desciende</div>
-      </section>
+        <!-- Móvil: Botón de menú hamburguesa de trazos minimalistas -->
+        <button onclick="toggleMobileMenu()" class="lg:hidden flex items-center justify-center p-1.5 text-stone-400 hover:text-red-500 focus:outline-none transition-colors duration-300" aria-label="Menú">
+            <svg id="menuIcon" class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </button>
+    </nav>
 
-      <!-- RESEÑA / PRÓLOGO -->
-      <section class="herencia-section">
-        <div class="herencia-shell">
-          <h2>El umbral</h2>
-          <p class="lead-quote">
-            «La lluvia golpeaba con fuerza las ventanas de la casa, convirtiendo la noche en una masa oscura y ruidosa donde todo parecía distante.»
-          </p>
-          <p>
-            Carlos Herrera lleva tres noches sin cerrar los ojos. Encerrado en su estudio, rodeado de fotografías, recortes y notas escritas con una letra que ya no reconoce como suya, ha buscado durante meses una salida. Siempre llega a la misma conclusión: <em>no existe ninguna.</em>
-          </p>
-          <p>
-            Hay algo en esa casa que lo observa. Algo que espera. Algo que le recuerda, noche tras noche, que una deuda sigue sin saldarse. Y cuando por fin levanta la mirada, lo encuentra sentado al otro extremo de la habitación, en una silla que sabía vacía.
-          </p>
-          <p class="lead-quote dim">
-            «Lo que realmente lo aterraba no era morir. Era seguir viviendo.»
-          </p>
+    <!-- Móvil: Cajón de menú superpuesto con desenfoque de fondo gótico -->
+    <div id="mobileMenu" class="fixed inset-0 bg-black/95 backdrop-blur-lg z-40 hidden flex flex-col items-center justify-center transition-all duration-500 opacity-0 pointer-events-none">
+        <div class="flex flex-col items-center gap-6 text-center">
+            <a href="#umbral" onclick="closeMobileMenu()" class="font-serif text-xl tracking-[4px] text-stone-300 hover:text-red-500 transition-colors duration-300 uppercase">El umbral</a>
+            <a href="#acertijo" onclick="closeMobileMenu()" class="font-serif text-xl tracking-[4px] text-stone-300 hover:text-red-500 transition-colors duration-300 uppercase">El acertijo</a>
+            <a href="#universo" onclick="closeMobileMenu()" class="font-serif text-xl tracking-[4px] text-stone-300 hover:text-red-500 transition-colors duration-300 uppercase">El universo</a>
+            <a href="#origen" onclick="closeMobileMenu()" class="font-serif text-xl tracking-[4px] text-stone-300 hover:text-red-500 transition-colors duration-300 uppercase">El origen</a>
+            <a href="#expedientes" onclick="closeMobileMenu()" class="font-serif text-xl tracking-[4px] text-stone-300 hover:text-red-500 transition-colors duration-300 uppercase">Los expedientes</a>
+            <a href="#comunidad" onclick="closeMobileMenu()" class="font-serif text-xl tracking-[4px] text-stone-300 hover:text-red-500 transition-colors duration-300 uppercase">La comunidad</a>
+            <a href="#podcast" onclick="closeMobileMenu()" class="font-serif text-xl tracking-[4px] text-stone-300 hover:text-red-500 transition-colors duration-300 uppercase">El podcast</a>
         </div>
-      </section>
+    </div>
 
-      <!-- PISTAS INTERACTIVAS -->
-      <section class="herencia-section alt" id="pistas">
-        <div class="herencia-shell">
-          <h2>Las pistas</h2>
-          <p class="pistas-intro">
-            Cada caso esconde objetos que nadie quiso nombrar. Toca cada uno para revelar lo que el expediente prefirió olvidar.
-          </p>
-          <div class="clue-grid">
-            <button class="clue-card" type="button" data-clue="muneco">
-              <span class="clue-seal" aria-hidden="true">I</span>
-              <span class="clue-label">El Muñeco</span>
-              <span class="clue-reveal">
-                Pequeño. Antiguo. Sentado sobre una silla. Botones negros por ojos, costuras visibles, una sonrisa torcida. Aparece en cada escena... y desaparece de todos los registros oficiales.
-              </span>
-            </button>
+    <!-- Botón de retorno a Eclipse Estudios: Reubicado en la esquina inferior izquierda (bottom-left) con despliegue progresivo al pasar el cursor -->
+    <nav class="fixed bottom-4 left-4 z-50">
+        <a href="#" class="glass-nav-back rounded-md">
+            <!-- Flecha de retroceso siempre visible -->
+            <span class="font-serif leading-none mb-[1px] mr-2 flex-shrink-0" style="font-size: 11px; color: #a8a29e; transition: color 0.4s ease;">←</span>
+            <!-- Bloque tipográfico unificado de Eclipse Estudios que se revela suavemente al hover -->
+            <div class="nav-text flex flex-col text-left leading-[1.2] tracking-[1.6px]">
+                <span class="font-serif" style="font-size: 11px; color: #a8a29e; transition: color 0.4s ease;">Eclipse</span>
+                <span class="font-serif tracking-[1.2px]" style="font-size: 9.5px; color: #a8a29e; transition: color 0.4s ease;">Estudios</span>
+            </div>
+        </a>
+    </nav>
 
-            <button class="clue-card" type="button" data-clue="circulo">
-              <span class="clue-seal" aria-hidden="true">II</span>
-              <span class="clue-label">El Círculo</span>
-              <span class="clue-reveal">
-                Decenas de restos de cera rodeando el cadáver, formando un círculo irregular. No era decoración. No era casualidad. Alguien quiso que estuviera allí.
-              </span>
-            </button>
-
-            <button class="clue-card" type="button" data-clue="fecha">
-              <span class="clue-seal" aria-hidden="true">III</span>
-              <span class="clue-label">La Fecha</span>
-              <span class="clue-reveal">
-                06 de junio del 2003. La detective Catalina la había visto antes. Demasiadas veces. Cada vez que aparece, se conecta con un recuerdo que lleva un año intentando entender.
-              </span>
-            </button>
-
-            <button class="clue-card" type="button" data-clue="carta">
-              <span class="clue-seal" aria-hidden="true">IV</span>
-              <span class="clue-label">La Carta</span>
-              <span class="clue-reveal">
-                Doblada varias veces sobre el escritorio. La intentó escribir durante semanas; cada vez terminaba rompiéndola. Ninguna palabra bastaba para justificar lo imperdonable.
-              </span>
-            </button>
-          </div>
-          <p class="clue-progress" id="clueProgress" aria-live="polite">0 / 4 pistas reveladas</p>
-        </div>
-      </section>
-
-      <!-- ACERTIJO -->
-      <section class="herencia-section" id="acertijo">
-        <div class="herencia-shell herencia-riddle" hidden id="riddleBlock">
-          <h2>El acertijo</h2>
-          <p class="riddle-text">
-            «No tengo voz, pero observo. No tengo vida, pero espero. Botones por ojos, una sonrisa que no es mía. ¿Qué soy?»
-          </p>
-          <form class="riddle-form" id="riddleForm" autocomplete="off">
-            <input
-              type="text"
-              id="riddleInput"
-              class="riddle-input"
-              placeholder="Escribe tu respuesta..."
-              aria-label="Tu respuesta al acertijo"
-            />
-            <button type="submit" class="herencia-button">Responder</button>
-          </form>
-          <p class="riddle-feedback" id="riddleFeedback" aria-live="polite"></p>
-
-          <div class="riddle-unlocked" id="riddleUnlocked" hidden>
-            <p class="lead-quote">
-              «El muñeco no vino solo. Llegó como un regalo, hace muchos años, envuelto en papel blanco y atado con una cinta roja.»
+    <section id="hero-section" class="min-h-screen flex flex-col items-center justify-center text-center px-6 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_20%,_#050505_95%)] opacity-85"></div>
+        
+        <div class="relative z-10 max-w-4xl mx-auto">
+            <h1 class="font-display text-5xl md:text-8xl mb-8 tracking-[10px] hero-title-anim anim-delay-title">
+                LA HERENCIA MALDITA
+            </h1>
+            <!-- Eslogan literario en Playfair Display Itálica con comillas clásicas francesas -->
+            <p class="font-eslogan text-xl md:text-2xl font-light italic text-stone-300 max-w-2xl mx-auto mb-10 tracking-wide leading-relaxed anim-delay-tagline">
+                «Toda historia deja una herencia, pero no toda herencia es un regalo.»
             </p>
-            <p>
-              Lo que Carlos heredó no empezó con él. La maldición tiene raíces más antiguas, sembradas en otra casa, en otra historia. Junto al regalo encontraron una sola cosa, intacta entre el polvo: <em>una rosa blanca.</em>
+            <div class="space-y-1 text-stone-400">
+                <p class="font-display text-[10px] tracking-[5px] uppercase anim-delay-author-label">Historia original de</p>
+                <p class="text-lg text-stone-200 anim-delay-author-names">Veronica Champion &amp; Rodrigo Carreño</p>
+                <p class="font-display text-[9px] tracking-[3px] uppercase pt-4 anim-delay-author-written">Escrita por Veronica Champion</p>
+            </div>
+        </div>
+
+        <!-- Botón Desciende: Posicionado absolutamente abajo, dejando espacio prudente -->
+        <div class="desciende-container anim-delay-desciende">
+            <span class="font-display text-[10px] tracking-[8px] uppercase animate-bounce">Desciende</span>
+        </div>
+    </section>
+
+    <section id="umbral" class="scroll-mt-section pt-12 pb-32 px-6 max-w-none border-t border-stone-900 reveal-hidden">
+        <div class="max-w-4xl mx-auto">
+            <div class="mb-12">
+                <h2 class="font-display text-2xl tracking-[6px] text-red-900 mb-8 uppercase">El umbral</h2>
+                <p class="text-2xl italic leading-relaxed text-stone-200 mb-8 border-l-2 border-red-900 pl-8">
+                    «La lluvia golpeaba con fuerza las ventanas de la casa, convirtiendo la noche en una masa oscura y ruidosa donde todo parecía distante.»
+                </p>
+            </div>
+            <div class="space-y-6 text-xl text-stone-400 leading-relaxed font-light bg-black/40 backdrop-blur-xs p-6 rounded-lg">
+                <p>
+                    Carlos Herrera lleva tres noches sin cerrar los ojos. Encerrado en su estudio, rodeado de fotografías, recortes y notas escritas con una letra que ya no reconoce como suya, ha buscado durante meses una salida. Siempre llega a la misma conclusión: <em class="text-stone-200">no existe ninguna.</em>
+                </p>
+                <p>
+                    Hay algo en esa casa que lo observa. Algo que espera. Algo que le recuerda, noche tras noche, que una deuda sigue sin saldarse. Y cuando por fin levanta la mirada, lo encuentra sentado al otro extremo de la habitación, en una silla que sabía vacía.
+                </p>
+                <p class="italic text-stone-500 pt-6">
+                    «Lo que realmente lo aterraba no era morir. Era seguir viviendo.»
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="acertijo" class="scroll-mt-section pt-12 pb-32 px-6 bg-[#030303] reveal-hidden">
+        <div class="max-w-5xl mx-auto">
+            <header class="mb-16 text-center">
+                <h2 class="font-display text-2xl tracking-[6px] text-stone-500 mb-4 uppercase">El acertijo</h2>
+                <p class="text-stone-400 italic text-lg">Ciertos objetos guardan memorias que nadie se atrevió a registrar. Desentierra lo que oculta cada marco.</p>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                <!-- PISTA 1: LOS MUÑECOS -->
+                <div class="clue-card p-10 group" onclick="toggleClue(this, 'muneco')">
+                    <span class="font-display text-red-900 text-sm mb-4 block">I</span>
+                    <h3 class="font-display text-xl tracking-widest text-stone-200">LOS MUÑECOS</h3>
+                    <div class="reveal-text flex flex-col sm:flex-row gap-6 items-center">
+                        <div class="flex-1">
+                            <p class="text-stone-400 italic">No hay una sola maldición. Hay decenas, y cada una de ellas vive atrapada dentro de un cuerpo de trapo diferente. Estos tres muñecos antiguos de ojos de botón, costuras toscas y sonrisas torcidas son solo el inicio... Aparecen en cada escena de horror y se esfuman de todos los registros oficiales.</p>
+                        </div>
+                        <div class="clue-image-container">
+                            <img src="muñecos.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1558882224-cca166733360?q=80&w=300';" alt="Los Muñecos" class="clue-image">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PISTA 2: EL CÍRCULO -->
+                <div class="clue-card p-10 group" onclick="toggleClue(this, 'circulo')">
+                    <span class="font-display text-red-900 text-sm mb-4 block">II</span>
+                    <h3 class="font-display text-xl tracking-widest text-stone-200">EL CÍRCULO</h3>
+                    <div class="reveal-text flex flex-col sm:flex-row gap-6 items-center">
+                        <div class="flex-1">
+                            <p class="text-stone-400 italic">Decenas de restos de cera y velas encendidas rodeando el cuerpo inmóvil, forming un círculo irregular de llamas danzantes. No era decoración de una noche ordinaria. Alguien o algo quiso que las velas iluminaran la oscuridad de su funesta partida.</p>
+                        </div>
+                        <div class="clue-image-container">
+                            <img src="velas.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1603006905003-be475563bc59?q=80&w=300';" alt="Velas del Círculo" class="clue-image">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PISTA 3: LA FECHA -->
+                <div class="clue-card p-10 group" onclick="toggleClue(this, 'fecha')">
+                    <span class="font-display text-red-900 text-sm mb-4 block">III</span>
+                    <h3 class="font-display text-xl tracking-widest text-stone-200">LA FECHA</h3>
+                    <div class="reveal-text flex flex-col sm:flex-row gap-6 items-center">
+                        <div class="flex-1">
+                            <p class="text-stone-400 italic">06 de junio del 2003. El viejo fechador de metal marcó ese día con tinta imborrable en el expediente. La detective Catalina la había visto antes. Demasiadas veces. Cada vez que aparece, se conecta con un recuerdo del que lleva un año intentando escapar.</p>
+                        </div>
+                        <div class="clue-image-container">
+                            <img src="fechador.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586075010923-2dd4570fb338?q=80&w=300';" alt="Fechador Metálico" class="clue-image">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PISTA 4: LA CARTA -->
+                <div class="clue-card p-10 group" onclick="toggleClue(this, 'carta')">
+                    <span class="font-display text-red-900 text-sm mb-4 block">IV</span>
+                    <h3 class="font-display text-xl tracking-widest text-stone-200">LA CARTA</h3>
+                    <div class="reveal-text flex flex-col sm:flex-row gap-6 items-center">
+                        <div class="flex-1">
+                            <p class="text-stone-400 italic">La carta, arrugada y guardada celosamente en su sobre antiguo sobre el escritorio. La intentó escribir durante semanas; cada vez terminaba rompiéndola. Ninguna palabra de arrepentimiento bastaba para justificar lo imperdonable.</p>
+                        </div>
+                        <div class="clue-image-container">
+                            <img src="carta.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1508962914676-134849a727f0?q=80&w=300';" alt="La Carta y Sobre" class="clue-image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contador de hilos desenterrados real -->
+            <div id="progressContainer" class="text-center font-display text-[10px] tracking-[4px] text-stone-600 uppercase">
+                Hilos desenterrados: <span id="clueCount">0</span> / 4
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN ACERTIJO INTERACTIVO (Se activa al completar pistas) -->
+    <section id="riddleSection" class="scroll-mt-section pt-12 pb-32 px-6 border-t border-stone-900 hidden bg-[#050505]/95">
+        <div class="max-w-3xl mx-auto text-center emerge-from-shadows">
+            <h2 class="font-display text-2xl tracking-[6px] text-red-900 mb-12 uppercase">El murmullo</h2>
+            <p class="text-2xl mb-12 italic text-stone-300 leading-relaxed">
+                «No tengo voz, pero observo. No tengo vida, pero espero. Botones por ojos, una sonrisa que no es mía. ¿Qué soy?»
             </p>
-
-            <!-- EASTER EGG: la rosa blanca oculta -->
-            <div class="rose-discovery">
-              <button
-                type="button"
-                id="roseBtn"
-                class="rose-btn"
-                aria-label="Tocar la rosa blanca"
-              >
-                <img src="rosa-blanca.png" alt="Una rosa blanca que emerge de la oscuridad" class="rose-img" />
-                <span class="rose-whisper" aria-hidden="true">tócala</span>
-              </button>
-              <p class="rose-hint" id="roseHint">Algo sobrevivió a la maldición. La rosa aún respira... acércate.</p>
-              <a
-                href="https://youtu.be/BdmEtIZtX-Q?si=aeC3b5cW8g6p8lnj"
-                id="roseLink"
-                class="rose-link"
-                target="_blank"
-                rel="noopener noreferrer"
-                hidden
-              >
-                La rosa se abre — Entra a «La Rosa Blanca» &rarr;
-              </a>
+            
+            <div class="flex flex-col items-center gap-8">
+                <!-- Se activa de manera síncrona cuando el expediente se completa -->
+                <input type="text" id="riddleInput" placeholder="Escribe lo que presientes..." class="bg-transparent border-b border-stone-800 py-4 w-full max-w-md text-center text-xl focus:outline-none focus:border-red-600 transition-colors uppercase tracking-[4px] font-display" disabled>
+                <button onclick="checkRiddle()" class="font-display text-[11px] tracking-[4px] uppercase border border-stone-700 px-10 py-4 hover:bg-white hover:text-black transition-all">
+                    Desentrañar
+                </button>
+                <div id="riddleFeedback" class="h-8 font-display text-sm tracking-[2px]"></div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      <!-- UNIVERSO COMPARTIDO -->
-      <section class="herencia-section alt" id="universo">
-        <div class="herencia-shell">
-          <h2>El universo</h2>
-          <p>
-            <strong class="rosa">La Herencia Maldita</strong> no existe sola. Forma parte de un mismo universo narrativo creado por Veronica Champion, conectado con <strong class="rosa">La Rosa Blanca</strong>, obra ya realizada que cuenta con su propio cortometraje.
-          </p>
-          <p>
-            Los hilos se cruzan: un objeto, una fecha, un apellido. Quien preste atención descubrirá que ambas historias comparten más que una atmósfera. Comparten una raíz.
-          </p>
-          <div class="universe-grid">
-            <article class="universe-card">
-              <span>Obra hermana</span>
-              <h3>La Rosa Blanca</h3>
-              <p>Cortometraje realizado · Veronica Champion</p>
-            </article>
-            <article class="universe-card current">
-              <span>Estás aquí</span>
-              <h3>La Herencia Maldita</h3>
-              <p>Libro en desarrollo · Proyecto audiovisual</p>
-            </article>
-          </div>
-        </div>
-      </section>
+            <!-- CONTENIDO DESBLOQUEADO (Rosa blanca interactiva progresiva con 6 etapas de pánico) -->
+            <div id="unlockedContent" class="mt-24 emerge-from-shadows hidden">
+                <div class="space-y-8 text-xl text-stone-400 font-light text-left border-l border-red-900 pl-8 mb-16">
+                    <p class="italic">«El muñeco no vino solo. Llegó como un regalo, hace muchos años, envuelto en papel blanco y atado con una cinta roja.»</p>
+                    <p>Lo que Carlos heredó no empezó con él. La maldición tiene raíces más antiguas, sembradas en otra casa, en otra historia. Junto al regalo encontraron una sola cosa, intacta entre el polvo: <em class="text-stone-200">una rosa blanca.</em></p>
+                </div>
 
-      <!-- EN DESARROLLO -->
-      <section class="herencia-section" id="desarrollo">
-        <div class="herencia-shell">
-          <h2>En desarrollo</h2>
-          <div class="herencia-meta">
-            <div>
-              <span>Formato</span>
-              <p>Libro · Cortometraje / Serie</p>
+                <div class="rose-discovery py-10 relative">
+                    <!-- Rosa Blanca con Progresión en 6 Toques -->
+                    <img src="rosa-blanca.png" 
+                         onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1559563458-527698bf5295?q=80&w=300&auto=format&fit=crop';" 
+                         alt="Rosa Blanca" id="roseBtn" class="rose-img" onclick="handleRoseClick()">
+                    
+                    <p id="roseHint" class="mt-8 text-stone-600 font-display text-[10px] tracking-[3px] uppercase transition-all duration-1000">
+                        Una presencia silente yace aquí...
+                    </p>
+                    
+                    <!-- Botón de YouTube Inicialmente Oculto (Cortometraje 1) -->
+                    <div id="finalLink" class="mt-12 emerge-from-shadows hidden">
+                        <a href="https://youtu.be/BdmEtIZtX-Q?si=aeC3b5cW8g6p8lnj" target="_blank" class="font-display text-sm tracking-[4px] text-red-500 border border-red-900 px-12 py-6 hover:bg-red-900 hover:text-white transition-all inline-block uppercase">
+                            La rosa se abre — Ver Cortometraje
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div>
-              <span>Género</span>
-              <p>Terror psicológico</p>
-            </div>
-            <div>
-              <span>Estado</span>
-              <p>Escritura en curso</p>
-            </div>
-          </div>
         </div>
-      </section>
+    </section>
 
-      <!-- CTA -->
-      <section class="herencia-section alt">
-        <div class="herencia-shell herencia-cta">
-          <p>El expediente sigue abierto. Vuelve: nuevas pistas se revelarán con el tiempo.</p>
-          <a href="index.html#proyectos" class="herencia-button">Ver todos los proyectos</a>
+    <!-- Seccion El Universo: Modificada con pt-12 y scroll-mt-section para centrado perfecto -->
+    <section id="universo" class="scroll-mt-section pt-12 pb-32 px-6 bg-[#020202] reveal-hidden">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="font-display text-2xl tracking-[6px] text-stone-500 mb-12 uppercase">El universo</h2>
+            <div class="grid md:grid-cols-2 gap-10">
+                <div class="space-y-6 text-lg text-stone-400 bg-black/50 backdrop-blur-xs p-6 rounded-lg">
+                    <p><strong class="text-red-800">La Herencia Maldita</strong> no existe sola. Forma parte de un mismo universo narrativo creado por Veronica Champion, conectado con <strong class="text-stone-200">La Rosa Blanca</strong>, obra ya realizada que cuenta con su propio cortometraje.</p>
+                    <p>Los hilos se cruzan: un objeto, una fecha, un apellido. Quien preste atención descubrirá que ambas historias comparten más que una atmósfera. Comparten una raíz.</p>
+                </div>
+                <div class="grid grid-cols-1 gap-6">
+                    <!-- Obras Relacionadas -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="border border-stone-800 p-6 rounded bg-black/60">
+                            <span class="font-display text-[9px] text-red-900 tracking-[3px] uppercase">Obra hermana</span>
+                            <h3 class="font-display text-xl text-stone-200 mt-2">La Rosa Blanca</h3>
+                            <p class="text-sm text-stone-500 mt-1">Cortometraje escrito por Veronica Champion</p>
+                        </div>
+                        <div class="border border-red-900/30 bg-red-900/5 p-6 rounded bg-black/60">
+                            <span class="font-display text-[9px] text-red-500 tracking-[3px] uppercase">Estás aquí</span>
+                            <h3 class="font-display text-xl text-stone-200 mt-2">La Herencia Maldita</h3>
+                            <p class="text-sm text-stone-500 mt-1">Libro</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Grimorio Interactivo con redirección directa a Wattpad -->
+                    <div class="flex flex-col sm:flex-row items-center gap-6 border border-stone-800/40 bg-black/70 p-6 rounded-lg hover:border-red-900/30 transition-all group">
+                        <!-- Libro PNG Flotante Libre con sombra de silueta centrada -->
+                        <a href="https://www.wattpad.com/story/412979024?utm_source=android&utm_medium=whatsapp&utm_content=story_info&wp_page=story_details_button&wp_uname=Nany_Champ" 
+                           target="_blank" 
+                           class="block flex-shrink-0">
+                            <img src="libro.png" onerror="this.onerror=null; this.src='https://placehold.co/300x450/0c0c0c/8a1410?text=La+Herencia+Maldita';" alt="La Herencia Maldita - Libro Wattpad" class="grimorio-book">
+                        </a>
+                        <div>
+                            <span class="font-display text-[9px] text-red-600 tracking-[2px] uppercase">Lectura original</span>
+                            <h4 class="font-display text-lg text-stone-200 mt-1">Adéntrate en el grimorio</h4>
+                            <p class="text-stone-400 text-sm mt-1 leading-relaxed">Lee la novela completa escrita por Veronica Champion directamente en Wattpad.</p>
+                            <a href="https://www.wattpad.com/story/412979024?utm_source=android&utm_medium=whatsapp&utm_content=story_info&wp_page=story_details_button&wp_uname=Nany_Champ" target="_blank" class="inline-block mt-3 font-display text-[10px] tracking-[2px] uppercase text-red-500 hover:text-red-400 transition-colors">Tocar para leer en Wattpad →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </section>
-    </main>
+    </section>
 
-    <footer class="herencia-footer">
-      <p>© <span id="year"></span> Eclipse Estudios · La Herencia Maldita</p>
+    <!-- Seccion El Origen: Modificada con pt-12 y scroll-mt-section para centrado perfecto -->
+    <section id="origen" class="scroll-mt-section pt-12 pb-32 px-6 border-t border-stone-900 bg-[#030303] relative overflow-hidden reveal-hidden">
+        <!-- Detalle ambiental de fondo -->
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_bottom,_#1a0505_0%,_transparent_60%)] opacity-30 pointer-events-none"></div>
+        
+        <div class="max-w-5xl mx-auto relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8">
+                <div>
+                    <!-- Corrección: De Precuela Oficial a simplemente Precuela -->
+                    <span class="font-display text-[9px] text-red-600 tracking-[3px] uppercase block mb-2">Precuela</span>
+                    <h2 class="font-display text-2xl tracking-[6px] text-stone-300 uppercase">El Origen: El Cómic</h2>
+                    <p class="text-stone-500 italic mt-2">Los eventos que desencadenaron la condena antes de La Herencia Maldita.</p>
+                </div>
+                <div class="flex gap-10 text-left md:text-center bg-black/40 p-4 rounded-lg">
+                    <div>
+                        <p class="font-display text-xs text-stone-600 tracking-widest uppercase">Época</p>
+                        <p class="text-stone-300">Finales del Siglo XIX</p>
+                    </div>
+                    <div>
+                        <p class="font-display text-xs text-stone-600 tracking-widest uppercase">Formato</p>
+                        <p class="text-stone-300">Cómic Digital</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenido del Cómic -->
+            <div class="grid lg:grid-cols-12 gap-12 items-center bg-black/60 backdrop-blur-xs p-6 md:p-10 rounded-xl">
+                <!-- Sinopsis Narrativa -->
+                <div class="lg:col-span-5 space-y-6">
+                    <p class="font-eslogan text-xl italic text-stone-200 leading-relaxed">
+                        «No soportaba la idea de envejecer, de morir siendo un hombre común... Carlos quería fama, riqueza y el secreto de vivir por siempre, sin importar el precio.»
+                    </p>
+                    <p class="text-stone-400 leading-relaxed font-light text-lg font-serif">
+                        Mucho antes de que la sombra se cerniera sobre Carlos Herrera en su estudio moderno, su ambición desmedida ya había sellado su destino. A finales del siglo XIX, consumido por una obsesión enfermiza hacia la inmortalidad, la riqueza y el renombre eterno, inició una búsqueda prohibida.
+                    </p>
+                    <p class="text-stone-500 leading-relaxed font-light italic">
+                        Adéntrate en las páginas ilustradas de este diario de locura y descubre cómo nació la deuda que la familia Herrera aún debe pagar.
+                    </p>
+                    
+                    <!-- Botón para expandir/mostrar el visor integrado -->
+                    <button onclick="toggleComicViewer()" id="comicBtn" class="font-display text-xs tracking-[4px] text-red-500 border border-red-900/60 hover:border-red-500 px-8 py-4 bg-red-950/10 hover:bg-red-950/30 transition-all rounded inline-flex items-center gap-3 uppercase">
+                        <span id="comicBtnText">Abrir Cómic</span>
+                        <svg class="w-4 h-4 transition-transform duration-300" id="comicArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Visor Interactivo Integrado de Calaméo (Inbound) -->
+                <div class="lg:col-span-7 w-full">
+                    <div id="comicViewerContainer" class="hidden transition-all duration-700 ease-in-out opacity-0 translate-y-8">
+                        <div class="border border-stone-800 bg-[#050505] p-2 rounded-lg shadow-2xl shadow-red-900/10 hover:border-red-900/30 transition-colors">
+                            <div class="relative w-full overflow-hidden rounded bg-black" style="padding-bottom: 64.59%;">
+                                <iframe id="calameoIframe" class="absolute top-0 left-0 w-full h-full border-0" src="https://v.calameo.com/?bkcode=008262593f97c4544a9df" allowfullscreen scrolling="no" allow="fullscreen *;"></iframe>
+                            </div>
+                            <div class="mt-3 flex justify-between items-center px-2">
+                                <span class="text-[10px] tracking-[2px] font-display text-stone-600 uppercase">Visor Interactivo Calaméo</span>
+                                <button onclick="maximizeComic()" class="text-[9px] tracking-[2px] font-display text-red-500/80 hover:text-red-400 uppercase transition-colors">Pantalla Completa ⛶</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Portada de Previsualización antes de abrir -->
+                    <div id="comicCoverPlaceholder" class="border border-stone-800/60 hover:border-red-900/40 bg-stone-950/40 p-8 rounded-lg text-center cursor-pointer group transition-all duration-500 flex flex-col justify-center items-center min-h-[350px] shadow-lg shadow-black/80" onclick="toggleComicViewer()">
+                        <div class="w-20 h-20 rounded-full border border-red-900/20 bg-red-900/5 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-red-900/10 transition-all duration-500">
+                            <svg class="w-8 h-8 text-red-700 group-hover:text-red-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                            </svg>
+                        </div>
+                        <h4 class="font-display text-lg tracking-[3px] text-stone-200 uppercase mb-2">Desvelar el Diario Ilustrado</h4>
+                        <p class="text-sm text-stone-500 max-w-sm mx-auto">Haz clic aquí para conocer los pecados de Carlos Herrera.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seccion Los Expedientes: Modificada con pt-12 y scroll-mt-section para centrado perfecto -->
+    <section id="expedientes" class="scroll-mt-section pt-12 pb-32 px-6 border-t border-stone-900 bg-[#020202] reveal-hidden">
+        <div class="max-w-5xl mx-auto">
+            <header class="mb-16 text-center">
+                <span class="font-display text-[9px] text-red-600 tracking-[3px] uppercase block mb-2">Archivos Clasificados</span>
+                <h2 class="font-display text-2xl tracking-[6px] text-stone-300 uppercase">Los Expedientes</h2>
+                <!-- Corrección: Texto específico descriptivo -->
+                <p class="text-stone-500 italic mt-2 max-w-xl mx-auto text-base">
+                    Investiga los perfiles de aquellos arrastrados por la condena.
+                </p>
+            </header>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- PERSONAJE 1: CATALINA HERRERA -->
+                <div class="char-card cursor-pointer group" onclick="openCharacterBlog('https://laherenciamaldita2026.blogspot.com/2026/06/catalina-herrera.html')">
+                    <div class="relative aspect-[3/4] overflow-hidden bg-stone-950">
+                        <img src="catalina.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=300';" alt="Catalina Herrera" class="char-portrait w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-85"></div>
+                        <div class="absolute bottom-6 left-6 right-6">
+                            <span class="font-display text-[9px] text-red-600 tracking-[2px] uppercase">La Detective</span>
+                            <h3 class="font-display text-xl tracking-wider text-stone-200 mt-1">Catalina Herrera</h3>
+                            <p class="text-stone-400 text-sm italic mt-1 font-serif">Buscando las piezas de un rompecabezas maldito de su pasado.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PERSONAJE 2: CARLOS HERRERA -->
+                <div class="char-card cursor-pointer group" onclick="openCharacterBlog('https://laherenciamaldita2026.blogspot.com/2026/06/carlos-herrera.html')">
+                    <div class="relative aspect-[3/4] overflow-hidden bg-stone-950">
+                        <img src="carlos.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300';" alt="Carlos Herrera" class="char-portrait w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-85"></div>
+                        <div class="absolute bottom-6 left-6 right-6">
+                            <span class="font-display text-[9px] text-red-600 tracking-[2px] uppercase">El Espectador</span>
+                            <h3 class="font-display text-xl tracking-wider text-stone-200 mt-1">Carlos Herrera</h3>
+                            <p class="text-stone-400 text-sm italic mt-1 font-serif">Tres noches sin dormir han atraído a lo innombrable a su estudio.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PERSONAJE 3: RAFAEL HERRERA -->
+                <div class="char-card cursor-pointer group" onclick="openCharacterBlog('https://laherenciamaldita2026.blogspot.com/2026/06/rafael-herrera.html')">
+                    <div class="relative aspect-[3/4] overflow-hidden bg-stone-950">
+                        <img src="rafael.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=300';" alt="Rafael Herrera" class="char-portrait w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-85"></div>
+                        <div class="absolute bottom-6 left-6 right-6">
+                            <span class="font-display text-[9px] text-red-600 tracking-[2px] uppercase">El Legado</span>
+                            <h3 class="font-display text-xl tracking-wider text-stone-200 mt-1">Rafael Herrera</h3>
+                            <p class="text-stone-400 text-sm italic mt-1 font-serif">Heredero de los hilos que nunca debieron desatarse.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PERSONAJE 4: KAELINOR (EL ENTE DEMONIACO) -->
+                <div class="char-card-demon cursor-pointer group" onclick="openCharacterBlog('https://laherenciamaldita2026.blogspot.com/2026/06/kaelinor.html')">
+                    <div class="relative aspect-[3/4] overflow-hidden bg-stone-950">
+                        <img src="kaelinor.jpeg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300';" alt="Kaelinor" class="char-portrait-demon w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-85"></div>
+                        <div class="absolute bottom-6 left-6 right-6">
+                            <span class="font-display text-[9px] text-red-500 tracking-[2px] uppercase animate-pulse">El Ente</span>
+                            <h3 class="font-display text-xl tracking-wider text-stone-100 mt-1" style="text-shadow: 0 0 10px rgba(230, 34, 25, 0.5);">Kaelinor</h3>
+                            <p class="text-red-400 text-sm italic mt-1 font-serif">El demonio con el cual Carlos Herrera selló su condena eterna.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PERSONAJE 5: SOFIA -->
+                <div class="char-card cursor-pointer group" onclick="openCharacterBlog('https://laherenciamaldita2026.blogspot.com/2026/06/sofia.html')">
+                    <div class="relative aspect-[3/4] overflow-hidden bg-stone-950">
+                        <img src="sofia.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=300';" alt="Sofía" class="char-portrait w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-85"></div>
+                        <div class="absolute bottom-6 left-6 right-6">
+                            <span class="font-display text-[9px] text-red-600 tracking-[2px] uppercase">La Presencia</span>
+                            <h3 class="font-display text-xl tracking-wider text-stone-200 mt-1">Sofía</h3>
+                            <p class="text-stone-400 text-sm italic mt-1 font-serif">Susurros en la penumbra de una herencia que se resiste a morir.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PERSONAJE 6: SUSAN -->
+                <div class="char-card cursor-pointer group" onclick="openCharacterBlog('https://laherenciamaldita2026.blogspot.com/2026/06/susan-herrera.html')">
+                    <div class="relative aspect-[3/4] overflow-hidden bg-stone-950">
+                        <img src="susan.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=300';" alt="Susan Herrera" class="char-portrait w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-85"></div>
+                        <div class="absolute bottom-6 left-6 right-6">
+                            <span class="font-display text-[9px] text-red-600 tracking-[2px] uppercase">La Condena</span>
+                            <h3 class="font-display text-xl tracking-wider text-stone-200 mt-1">Susan Herrera</h3>
+                            <p class="text-stone-400 text-sm italic mt-1 font-serif">Víctima colateral de un trato que se firmó con sangre.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seccion La Comunidad: Modificada con pt-12 y scroll-mt-section para centrado perfecto -->
+    <section id="comunidad" class="scroll-mt-section pt-12 pb-32 px-6 border-t border-stone-900 bg-[#030303] relative overflow-hidden reveal-hidden">
+        <!-- Detalle ambiental de fondo -->
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(138,20,16,0.12)_0%,_transparent_65%)] pointer-events-none"></div>
+        
+        <div class="max-w-5xl mx-auto flex flex-col items-center">
+            <header class="mb-16 text-center">
+                <span class="font-display text-[9px] text-red-600 tracking-[3px] uppercase block mb-2">Investiga el caso</span>
+                <h2 class="font-display text-2xl tracking-[6px] text-stone-300 uppercase">La Comunidad y El Legado</h2>
+                <p class="text-stone-500 italic mt-2">Participa en el debate o desvela los misterios. Vuélvete un detective.</p>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 w-full">
+                <!-- FORO DE FACEBOOK -->
+                <a href="https://www.facebook.com/profile.php?id=61591361162519&sk=directory_names" target="_blank" class="border border-stone-800 bg-black/60 p-8 rounded-lg shadow-lg hover:border-blue-900/40 hover:shadow-blue-950/10 transition-all group flex flex-col justify-between min-h-[280px]">
+                    <div>
+                        <div class="flex justify-between items-start mb-6">
+                            <span class="font-display text-[9px] text-blue-500 tracking-[3px] uppercase">El confesionario</span>
+                            <span class="text-[10px] tracking-[1px] font-display text-stone-600 uppercase">Comunidad</span>
+                        </div>
+                        <h3 class="font-display text-xl text-stone-200 group-hover:text-blue-400 transition-colors">EL FORO DE LAS ALMAS</h3>
+                        <p class="text-stone-400 text-sm mt-3 leading-relaxed font-serif">
+                            Únete al foro oficial de La Herencia Maldita. Comparte tus análisis, teorías y sospechas con otros investigadores y desentraña todo sobre La Herencia Maldita.
+                        </p>
+                    </div>
+                    <div class="mt-6 flex items-center gap-2 text-[10px] tracking-[2px] font-display text-blue-500 group-hover:text-blue-400 uppercase transition-colors">
+                        <span>Ingresar al foro</span>
+                        <span class="transform group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </a>
+
+                <!-- PERSONAJES DEL SPIN-OFF (BLOGSPOT INBOUND) -->
+                <!-- Corrección: Título del expediente con formato de dos puntos -->
+                <div onclick="openCharacterBlog('https://creativemindbyjess.blogspot.com/')" class="border border-stone-800 bg-black/60 p-8 rounded-lg shadow-lg hover:border-red-900/40 hover:shadow-red-950/10 transition-all group flex flex-col justify-between min-h-[280px] cursor-pointer">
+                    <div>
+                        <div class="flex justify-between items-start mb-6">
+                            <span class="font-display text-[9px] text-red-600 tracking-[3px] uppercase">Spin-off</span>
+                            <span class="text-[10px] tracking-[1px] font-display text-stone-600 uppercase">Blog</span>
+                        </div>
+                        <h3 class="font-display text-xl text-stone-200 group-hover:text-red-500 transition-colors">EXPEDIENTE: LA ROSA BLANCA</h3>
+                        <p class="text-stone-400 text-sm mt-3 leading-relaxed font-serif">
+                            Adéntrate en el expediente más fascinante y terrorífico de este universo, La Rosa Blanca. Lee las crónicas confidenciales y descubre la conexión oculta detrás de esta trágica maldición.
+                        </p>
+                    </div>
+                    <div class="mt-6 flex items-center gap-2 text-[10px] tracking-[2px] font-display text-red-500 group-hover:text-red-400 uppercase transition-colors">
+                        <span>Explorar</span>
+                        <span class="transform group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seccion El Podcast: Modificada con pt-12 y scroll-mt-section para centrado perfecto -->
+    <section id="podcast" class="scroll-mt-section pt-12 pb-32 px-6 border-t border-stone-900 bg-[#020202] relative overflow-hidden reveal-hidden">
+        <!-- Detalle de humo rojo para atmósfera de podcast -->
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(138,20,16,0.12)_0%,_transparent_65%)] pointer-events-none"></div>
+
+        <div class="max-w-4xl mx-auto relative z-10">
+            <header class="mb-16 text-center">
+                <!-- Correcciones: De Análisis de Lore a Análisis. Títulos del Podcast y Capítulo 1 actualizados -->
+                <span class="font-display text-[9px] text-red-600 tracking-[3px] uppercase block mb-2">Análisis</span>
+                <h2 class="font-display text-2xl tracking-[6px] text-stone-300 uppercase">La Herencia Maldita: El Podcast</h2>
+                <p class="text-stone-500 italic mt-2">Capítulo 1: El origen del pacto</p>
+            </header>
+
+            <!-- Video del Podcast Integrado Nocookie con controles de YouTube oficiales -->
+            <div class="relative w-full max-w-3xl mx-auto rounded-lg overflow-hidden border border-stone-800 bg-black/40 shadow-2xl shadow-red-950/20" style="padding-bottom: 56.25%;">
+                <iframe class="absolute top-0 left-0 w-full h-full border-0" src="https://www.youtube-nocookie.com/embed/ZS5ngPm1eb0?si=eVXH_53xqg7o3cUu&amp;controls=1" title="YouTube video player" referrerpolicy="no-referrer-when-downgrade" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+
+            <div class="mt-8 text-center max-w-2xl mx-auto bg-black/40 p-6 rounded-lg">
+                <p class="text-stone-400 font-serif leading-relaxed italic text-lg">
+                    «Cada pacto tiene un precio, y cada deuda requiere un cobrador. Analizamos el trasfondo oscuro del libro, desvelamos los símbolos ocultos y exploramos lo que Veronica Champion sembró en esta tétrica dinastía.»
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-20 border-t border-stone-900 text-center opacity-40 bg-black">
+        <p class="font-display text-[10px] tracking-[5px] uppercase">
+            © <span id="currentYear">2026</span> ECLIPSE ESTUDIOS • LA HERENCIA MALDITA
+        </p>
     </footer>
 
-    <script src="herencia.js"></script>
-  </body>
+    <!-- MODAL DE REPRODUCTOR DE VIDEO CINEMÁTICO -->
+    <div id="videoModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md hidden transition-all duration-500">
+        <div class="relative w-full max-w-4xl px-4 aspect-video flex flex-col justify-center">
+            <!-- Botón Cerrar Película -->
+            <button onclick="closeVideoModal()" class="absolute -top-16 right-4 text-stone-400 hover:text-white font-display text-xs tracking-[4px] uppercase flex items-center gap-2 bg-stone-900/80 px-5 py-3 rounded border border-stone-800 transition-all hover:border-red-900 hover:text-red-500 shadow-lg">
+                Cerrar Escena ×
+            </button>
+            <div class="w-full h-full rounded-lg overflow-hidden border-2 border-red-950 shadow-2xl shadow-red-900/40 bg-black">
+                <iframe id="modalIframe" class="w-full h-full" src="" frameborder="0" referrerpolicy="no-referrer-when-downgrade" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <!-- Subtítulos de control -->
+            <div class="mt-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <p class="text-center text-[10px] tracking-[4px] uppercase font-display text-red-600/60">
+                    La Herencia Maldita • Capítulo Especial: El Despertar
+                </p>
+                <a href="https://youtu.be/n-2Q3lfgXgA?si=TwLmFOrd76LVlkAL" target="_blank" onclick="handleExternalPlay()" class="text-stone-400 hover:text-white text-[10px] tracking-[2px] uppercase font-display underline transition-colors">
+                    ¿No carga? Ver en YouTube y continuar →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE VISOR DE EXPEDIENTES DE PERSONAJES (INBOUND DE BLOGSPOT) -->
+    <div id="charBlogModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md hidden transition-all duration-500">
+        <div class="relative w-full h-full max-w-5xl px-4 py-8 flex flex-col justify-center">
+            <!-- Botón Cerrar Expediente -->
+            <button onclick="closeCharacterBlog()" class="absolute top-4 right-4 text-stone-400 hover:text-white font-display text-xs tracking-[4px] uppercase flex items-center gap-2 bg-stone-900/80 px-5 py-3 rounded border border-stone-800 transition-all hover:border-red-900 hover:text-red-500 shadow-lg z-50">
+                Cerrar Expediente ×
+            </button>
+            <div class="w-full h-[85vh] rounded-lg overflow-hidden border-2 border-stone-800 shadow-2xl shadow-black/80 bg-[#0c0c0c]">
+                <iframe id="charBlogIframe" class="w-full h-full" src="" frameborder="0" scrolling="yes"></iframe>
+            </div>
+            <div class="mt-4 text-center">
+                <p class="text-[10px] tracking-[4px] uppercase font-display text-red-600/60">
+                    Registro Confidencial • Cargado desde Blogspot de Eclipse Estudios
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const clickedClues = new Set();
+        let roseClicks = 0;
+
+        // Implementación de Scroll-Reveal Premium para la aparición elegante de elementos
+        document.addEventListener("DOMContentLoaded", function() {
+            const observerOptions = {
+                root: null,
+                rootMargin: "0px",
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("reveal-visible");
+                        observer.unobserve(entry.target); // Solo se activa una vez para máxima elegancia
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll(".reveal-hidden").forEach(el => {
+                observer.observe(el);
+            });
+        });
+
+        // Control del menú móvil
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const icon = document.getElementById('menuIcon');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                setTimeout(() => {
+                    menu.classList.remove('opacity-0', 'pointer-events-none');
+                }, 50);
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path>';
+                document.body.style.overflow = 'hidden';
+            } else {
+                closeMobileMenu();
+            }
+        }
+
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const icon = document.getElementById('menuIcon');
+            menu.classList.add('opacity-0', 'pointer-events-none');
+            icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path>';
+            document.body.style.overflow = '';
+            setTimeout(() => {
+                menu.classList.add('hidden');
+            }, 500);
+        }
+
+        // Revelación de Pistas en el Expediente
+        function toggleClue(el, id) {
+            if(el.classList.contains('active')) return;
+            el.classList.add('active');
+            clickedClues.add(id);
+            document.getElementById('clueCount').textContent = clickedClues.size;
+
+            if (clickedClues.size === 4) {
+                const riddle = document.getElementById('riddleSection');
+                riddle.classList.remove('hidden');
+                document.getElementById('riddleInput').disabled = false;
+                setTimeout(() => {
+                    riddle.scrollIntoView({ behavior: 'smooth' });
+                }, 800);
+            }
+        }
+
+        // Validación del Acertijo
+        function checkRiddle() {
+            const input = document.getElementById('riddleInput');
+            const val = input.value.toLowerCase().trim();
+            const feedback = document.getElementById('riddleFeedback');
+            const unlocked = document.getElementById('unlockedContent');
+
+            if (val === 'muñeco' || val === 'el muñeco' || val === 'muñecos' || val === 'los muñecos') {
+                feedback.innerHTML = '<span class="text-red-500 animate-pulse">El secreto se revela...</span>';
+                unlocked.classList.remove('hidden');
+                unlocked.classList.add('emerge-from-shadows');
+                input.disabled = true;
+                setTimeout(() => {
+                    unlocked.scrollIntoView({ behavior: 'smooth' });
+                }, 600);
+            } else {
+                input.classList.add('shake-input');
+                feedback.innerHTML = '<span class="text-stone-600">El silencio no responde a esa palabra.</span>';
+                setTimeout(() => {
+                    feedback.innerHTML = '';
+                    input.classList.remove('shake-input');
+                }, 2000);
+            }
+        }
+
+        // Progresión fidedigna de la Rosa Blanca (6 fases interactivas)
+        function handleRoseClick() {
+            const rose = document.getElementById('roseBtn');
+            const hint = document.getElementById('roseHint');
+            const link = document.getElementById('finalLink');
+
+            if (roseClicks >= 6) return; // Bloqueo total posterior
+
+            // Limpiar clases de sacudidas previas para poder relanzarlas al instante
+            rose.classList.remove('rose-shiver-light', 'rose-shiver-medium', 'rose-shiver-annoyed');
+            void rose.offsetWidth; // Disparar reflow para reiniciar animaciones instantáneamente
+
+            roseClicks++;
+
+            if (roseClicks === 1) {
+                // Toque 1: Estremecimiento suave, leve color (opacidad al 40%)
+                rose.classList.add('rose-shiver-light');
+                rose.style.filter = "grayscale(0.6) brightness(0.8) drop-shadow(0 0 15px rgba(255, 255, 255, 0.35))";
+                rose.style.opacity = "0.40";
+                
+                hint.textContent = "Un latido lejano se percibe... insiste.";
+                hint.className = "mt-8 text-stone-400 font-display text-[10px] tracking-[3px] uppercase transition-all duration-1000";
+            } 
+            else if (roseClicks === 2) {
+                // Toque 2: Estremecimiento mediano y queda con vibración continua leve
+                rose.classList.add('rose-shiver-medium', 'rose-idle-vibrate');
+                rose.style.filter = "grayscale(0.3) brightness(1.1) drop-shadow(0 0 30px rgba(255, 255, 255, 0.6))";
+                rose.style.opacity = "0.75";
+                
+                hint.textContent = "La rosa reacciona a tu tacto. Solo un roce más.";
+                hint.className = "mt-8 text-red-400 font-display text-[10px] tracking-[3px] uppercase transition-all duration-1000";
+            } 
+            else if (roseClicks === 3) {
+                // Toque 3: Resurrección completa, latido suave con resplandor blanco angelical
+                rose.classList.remove('rose-idle-vibrate');
+                rose.classList.add('rose-glowing-heartbeat');
+                rose.style.filter = "";
+                rose.style.opacity = "";
+                
+                hint.textContent = "El velo se ha rasgado por completo.";
+                hint.className = "mt-8 text-white font-display text-[10px] tracking-[3px] uppercase transition-all duration-1000";
+                
+                // Mostrar botón de YouTube de La Rosa Blanca original
+                link.classList.remove('hidden');
+                link.classList.add('emerge-from-shadows');
+            }
+            else if (roseClicks === 4) {
+                // Toque 4: Incomodidad. Se estremece de nuevo. El resplandor vira a rojo sangre sutil
+                rose.classList.remove('rose-glowing-heartbeat');
+                rose.classList.add('rose-shiver-annoyed', 'rose-glowing-irritated');
+                
+                hint.textContent = "La estás perturbando... algo se agita en su raíz.";
+                hint.className = "mt-8 text-red-500 font-display text-[10px] tracking-[3px] uppercase transition-all duration-1000";
+            }
+            else if (roseClicks === 5) {
+                // Toque 5: Irritación severa. Mayor estremecimiento. Rosa se tiñe de sangre oscura
+                rose.classList.remove('rose-glowing-irritated');
+                rose.classList.add('rose-shiver-annoyed', 'rose-glowing-angry');
+                
+                hint.textContent = "La rosa gotea recuerdos de dolor. ¡Detén tu insistencia!";
+                hint.className = "mt-8 text-red-700 font-display text-[10px] tracking-[3px] uppercase transition-all duration-1000 animate-pulse";
+            }
+            else if (roseClicks >= 6) {
+                // Toque 6 (La Herencia se desata): Despertar total, rojo carmesí absoluto y abre el reproductor modal
+                rose.classList.remove('rose-glowing-angry', 'rose-shiver-annoyed');
+                
+                // Aplicar bloqueo estricto visual y mecánico (Remueve manito y cualquier interactividad posterior)
+                rose.className = "rose-img rose-glowing-angry pointer-events-none"; 
+                rose.style.cursor = "default";
+                rose.removeAttribute('onclick'); // Desvincula el controlador de eventos definitivamente
+
+                hint.textContent = "Has desatado la herencia...";
+                hint.className = "mt-8 text-red-600 font-display text-[10px] tracking-[3px] uppercase transition-all duration-1000";
+                
+                // Detonador de Video Cinematográfico de Escena 4 en la misma página
+                setTimeout(() => {
+                    openVideoModal();
+                }, 400);
+            }
+        }
+
+        // Funciones del Modal de Cine de YouTube
+        function openVideoModal() {
+            const modal = document.getElementById('videoModal');
+            const iframe = document.getElementById('modalIframe');
+            // Formato embebido con controles activos para evitar el error 153 en entornos con shields estrictos
+            iframe.src = "https://www.youtube.com/embed/n-2Q3lfgXgA?si=z08xckehwftkSMHu&controls=1&autoplay=1&rel=0&enablejsapi=1";
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Detener scroll de fondo
+        }
+
+        function closeVideoModal() {
+            const modal = document.getElementById('videoModal');
+            const iframe = document.getElementById('modalIframe');
+            iframe.src = ""; // Destruir fuente del iframe para frenar audio de inmediato
+            modal.classList.add('hidden');
+            document.body.style.overflow = ''; // Devolver scroll original
+        }
+
+        // Si se hace clic en mirar en YouTube directamente, cerramos la ventana de inmediato en la web principal
+        function handleExternalPlay() {
+            closeVideoModal();
+        }
+
+        // Controladores de Visor del Cómic de Calaméo
+        function toggleComicViewer() {
+            const container = document.getElementById('comicViewerContainer');
+            const placeholder = document.getElementById('comicCoverPlaceholder');
+            const arrow = document.getElementById('comicArrow');
+            const btnText = document.getElementById('comicBtnText');
+            
+            if (container.classList.contains('hidden')) {
+                // Mostrar visor
+                container.classList.remove('hidden');
+                placeholder.classList.add('hidden');
+                btnText.textContent = 'Cerrar Cómic';
+                arrow.classList.add('rotate-180');
+                
+                setTimeout(() => {
+                    container.classList.remove('opacity-0', 'translate-y-8');
+                }, 50);
+            } else {
+                // Ocultar visor, mostrar portada
+                container.classList.add('opacity-0', 'translate-y-8');
+                arrow.classList.remove('rotate-180');
+                btnText.textContent = 'Abrir Cómic';
+                
+                setTimeout(() => {
+                    container.classList.add('hidden');
+                    placeholder.classList.remove('hidden');
+                }, 500);
+            }
+        }
+
+        function maximizeComic() {
+            const iframe = document.getElementById('calameoIframe');
+            if (iframe.requestFullscreen) {
+                iframe.requestFullscreen();
+            } else if (iframe.webkitRequestFullscreen) { /* Safari */
+                iframe.webkitRequestFullscreen();
+            } else if (iframe.msRequestFullscreen) { /* IE11 */
+                iframe.msRequestFullscreen();
+            }
+        }
+
+        // Funciones del Modal Inbound de Blogs de Personajes (Blogspot)
+        function openCharacterBlog(url) {
+            const modal = document.getElementById('charBlogModal');
+            const iframe = document.getElementById('charBlogIframe');
+            iframe.src = url;
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Detiene el scroll de fondo
+        }
+
+        function closeCharacterBlog() {
+            const modal = document.getElementById('charBlogModal');
+            const iframe = document.getElementById('charBlogIframe');
+            iframe.src = ""; // Limpia la url para detener la carga
+            modal.classList.add('hidden');
+            document.body.style.overflow = ''; // Devuelve el scroll normal
+        }
+
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+</body>
 </html>
